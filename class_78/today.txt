@@ -1,0 +1,613 @@
+Microsoft Windows [Version 10.0.26200.8246]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\B-6> F:
+
+F:\>cd \sakirul__1295462\assets\PHP\Fordar_xaamp\mysql\bin
+
+F:\sakirul__1295462\assets\PHP\Fordar_xaamp\mysql\bin> mysql -u root
+ERROR 2002 (HY000): Can't connect to MySQL server on 'localhost' (10061)
+
+F:\sakirul__1295462\assets\PHP\Fordar_xaamp\mysql\bin> mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases
+    -> ;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| new_db             |
+| performance_schema |
+| phpmyadmin         |
+| test               |
++--------------------+
+6 rows in set (0.030 sec)
+
+MariaDB [(none)]> show tables;
+ERROR 1046 (3D000): No database selected
+MariaDB [(none)]> use new_db;
+Database changed
+MariaDB [new_db]> show tables;
++------------------+
+| Tables_in_new_db |
++------------------+
+| students         |
++------------------+
+1 row in set (0.001 sec)
+
+MariaDB [new_db]> select * from students;
+Empty set (0.092 sec)
+
+MariaDB [new_db]> des test;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'des test' at line 1
+MariaDB [new_db]> desc students;
++-------------+-----------------+------+-----+---------+----------------+
+| Field       | Type            | Null | Key | Default | Extra          |
++-------------+-----------------+------+-----+---------+----------------+
+| id          | int(5) unsigned | NO   | PRI | NULL    | auto_increment |
+| name        | varchar(100)    | NO   |     | NULL    |                |
+| email       | varchar(100)    | YES  | UNI | NULL    |                |
+| address     | varchar(255)    | YES  |     | NULL    |                |
+| is_inactive | tinyint(4)      | YES  |     | 0       |                |
++-------------+-----------------+------+-----+---------+----------------+
+5 rows in set (0.012 sec)
+
+MariaDB [new_db]> select * from students;
+Empty set (0.000 sec)
+
+MariaDB [new_db]> insert into students(name, email, is_inactive) values ("Arif", "examole@gmail.com" , 0);
+Query OK, 1 row affected (0.040 sec)
+
+MariaDB [new_db]> select * from students;
++----+------+-------------------+---------+-------------+
+| id | name | email             | address | is_inactive |
++----+------+-------------------+---------+-------------+
+|  1 | Arif | examole@gmail.com | NULL    |           0 |
++----+------+-------------------+---------+-------------+
+1 row in set (0.000 sec)
+
+MariaDB [new_db]> insert into students(name, email, is_inactive) values ("jaber", "exampjaberle@gmail.com" , 1);
+Query OK, 1 row affected (0.060 sec)
+
+MariaDB [new_db]> select * from students;
++----+-------+------------------------+---------+-------------+
+| id | name  | email                  | address | is_inactive |
++----+-------+------------------------+---------+-------------+
+|  1 | Arif  | examole@gmail.com      | NULL    |           0 |
+|  2 | jaber | exampjaberle@gmail.com | NULL    |           1 |
++----+-------+------------------------+---------+-------------+
+2 rows in set (0.000 sec)
+
+MariaDB [new_db]> insert into students(name, email, is_inactive, "adress") values ("safi", "exampsafile@gmail.com" , 1 "malibag");
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '"adress") values ("safi", "exampsafile@gmail.com" , 1 "malibag")' at line 1
+MariaDB [new_db]> insert into students(name, email, is_inactive, "address") values ("safi", "exampsafile@gmail.com" , 1 "malibag");
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '"address") values ("safi", "exampsafile@gmail.com" , 1 "malibag")' at line 1
+MariaDB [new_db]> insert into students(name, email, is_inactive, address) values ("safi", "exampsafile@gmail.com" , 1 "malibag");
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '"malibag")' at line 1
+MariaDB [new_db]> insert into students(name, email, is_inactive, address) values ("safi", "exampsafile@gmail.com" , 1, "malibag");
+Query OK, 1 row affected (0.028 sec)
+
+MariaDB [new_db]> select * from students;
++----+-------+------------------------+---------+-------------+
+| id | name  | email                  | address | is_inactive |
++----+-------+------------------------+---------+-------------+
+|  1 | Arif  | examole@gmail.com      | NULL    |           0 |
+|  2 | jaber | exampjaberle@gmail.com | NULL    |           1 |
+|  3 | safi  | exampsafile@gmail.com  | malibag |           1 |
++----+-------+------------------------+---------+-------------+
+3 rows in set (0.000 sec)
+
+MariaDB [new_db]> select id, name, is_active, from students;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'from students' at line 1
+MariaDB [new_db]> select id, name, is_inactive, from students;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'from students' at line 1
+MariaDB [new_db]> select id, name, is_inactive from students;
++----+-------+-------------+
+| id | name  | is_inactive |
++----+-------+-------------+
+|  1 | Arif  |           0 |
+|  2 | jaber |           1 |
+|  3 | safi  |           1 |
++----+-------+-------------+
+3 rows in set (0.000 sec)
+
+MariaDB [new_db]> select is, name from students where is_inactive=0;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'is, name from students where is_inactive=0' at line 1
+MariaDB [new_db]> select id, name from students where is_inactive=0;
++----+------+
+| id | name |
++----+------+
+|  1 | Arif |
++----+------+
+1 row in set (0.001 sec)
+
+MariaDB [new_db]> select id, name from students where is_inactive=1;
++----+-------+
+| id | name  |
++----+-------+
+|  2 | jaber |
+|  3 | safi  |
++----+-------+
+2 rows in set (0.000 sec)
+
+MariaDB [new_db]> select id, name from students where is_inactive=0 order by name;
++----+------+
+| id | name |
++----+------+
+|  1 | Arif |
++----+------+
+1 row in set (0.001 sec)
+
+MariaDB [new_db]> select id, name from students where is_inactive=0 order by name desc;
++----+------+
+| id | name |
++----+------+
+|  1 | Arif |
++----+------+
+1 row in set (0.002 sec)
+
+MariaDB [new_db]> select id, name from students where is_inactive=0 order by id desc;
++----+------+
+| id | name |
++----+------+
+|  1 | Arif |
++----+------+
+1 row in set (0.001 sec)
+
+MariaDB [new_db]> select id, name from students where is_inactive=1 order by id desc;
++----+-------+
+| id | name  |
++----+-------+
+|  3 | safi  |
+|  2 | jaber |
++----+-------+
+2 rows in set (0.001 sec)
+
+MariaDB [new_db]> insert into students(name, email, is_inactive, address) values ("munna", "exampmunna@gmail.com" , 1, "dhaka");
+Query OK, 1 row affected (0.075 sec)
+
+MariaDB [new_db]> select * from students;
++----+-------+------------------------+---------+-------------+
+| id | name  | email                  | address | is_inactive |
++----+-------+------------------------+---------+-------------+
+|  1 | Arif  | examole@gmail.com      | NULL    |           0 |
+|  2 | jaber | exampjaberle@gmail.com | NULL    |           1 |
+|  3 | safi  | exampsafile@gmail.com  | malibag |           1 |
+|  4 | munna | exampmunna@gmail.com   | dhaka   |           1 |
++----+-------+------------------------+---------+-------------+
+4 rows in set (0.001 sec)
+
+MariaDB [new_db]> insert into students(name, email, is_inactive, address) values ("mursalin", "exampsae@gmail.com" , 1, "malibag2");
+Query OK, 1 row affected (0.030 sec)
+
+MariaDB [new_db]> select * from students;
++----+----------+------------------------+----------+-------------+
+| id | name     | email                  | address  | is_inactive |
++----+----------+------------------------+----------+-------------+
+|  1 | Arif     | examole@gmail.com      | NULL     |           0 |
+|  2 | jaber    | exampjaberle@gmail.com | NULL     |           1 |
+|  3 | safi     | exampsafile@gmail.com  | malibag  |           1 |
+|  4 | munna    | exampmunna@gmail.com   | dhaka    |           1 |
+|  5 | mursalin | exampsae@gmail.com     | malibag2 |           1 |
++----+----------+------------------------+----------+-------------+
+5 rows in set (0.001 sec)
+
+MariaDB [new_db]> insert into students(name, email, is_inactive, address) values ("safi6", "exampsafilue@gmail.com" , 0, "malibag3");
+Query OK, 1 row affected (0.028 sec)
+
+MariaDB [new_db]> select * from students;
++----+----------+------------------------+----------+-------------+
+| id | name     | email                  | address  | is_inactive |
++----+----------+------------------------+----------+-------------+
+|  1 | Arif     | examole@gmail.com      | NULL     |           0 |
+|  2 | jaber    | exampjaberle@gmail.com | NULL     |           1 |
+|  3 | safi     | exampsafile@gmail.com  | malibag  |           1 |
+|  4 | munna    | exampmunna@gmail.com   | dhaka    |           1 |
+|  5 | mursalin | exampsae@gmail.com     | malibag2 |           1 |
+|  6 | safi6    | exampsafilue@gmail.com | malibag3 |           0 |
++----+----------+------------------------+----------+-------------+
+6 rows in set (0.001 sec)
+
+MariaDB [new_db]> select id, name from students where is_inactive=1 order by id desc;
++----+----------+
+| id | name     |
++----+----------+
+|  5 | mursalin |
+|  4 | munna    |
+|  3 | safi     |
+|  2 | jaber    |
++----+----------+
+4 rows in set (0.001 sec)
+
+MariaDB [new_db]> select id, name from students where is_inactive=0 order by id desc;
++----+-------+
+| id | name  |
++----+-------+
+|  6 | safi6 |
+|  1 | Arif  |
++----+-------+
+2 rows in set (0.001 sec)
+
+MariaDB [new_db]> update students set name="kairul" , email="khairl@gmail.com" where id=6;
+Query OK, 1 row affected (0.059 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [new_db]> select * from students;
++----+----------+------------------------+----------+-------------+
+| id | name     | email                  | address  | is_inactive |
++----+----------+------------------------+----------+-------------+
+|  1 | Arif     | examole@gmail.com      | NULL     |           0 |
+|  2 | jaber    | exampjaberle@gmail.com | NULL     |           1 |
+|  3 | safi     | exampsafile@gmail.com  | malibag  |           1 |
+|  4 | munna    | exampmunna@gmail.com   | dhaka    |           1 |
+|  5 | mursalin | exampsae@gmail.com     | malibag2 |           1 |
+|  6 | kairul   | khairl@gmail.com       | malibag3 |           0 |
++----+----------+------------------------+----------+-------------+
+6 rows in set (0.001 sec)
+
+MariaDB [new_db]> update students set email ="examolemirsalin@gmail.com" address="mirpur" where id=5;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'address="mirpur" where id=5' at line 1
+MariaDB [new_db]> update students set email ="examolemirsalin@gmail.com",  address="mirpur" where id=5;
+Query OK, 1 row affected (0.042 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [new_db]> select * from students;
++----+----------+---------------------------+----------+-------------+
+| id | name     | email                     | address  | is_inactive |
++----+----------+---------------------------+----------+-------------+
+|  1 | Arif     | examole@gmail.com         | NULL     |           0 |
+|  2 | jaber    | exampjaberle@gmail.com    | NULL     |           1 |
+|  3 | safi     | exampsafile@gmail.com     | malibag  |           1 |
+|  4 | munna    | exampmunna@gmail.com      | dhaka    |           1 |
+|  5 | mursalin | examolemirsalin@gmail.com | mirpur   |           1 |
+|  6 | kairul   | khairl@gmail.com          | malibag3 |           0 |
++----+----------+---------------------------+----------+-------------+
+6 rows in set (0.001 sec)
+
+MariaDB [new_db]> update students set email ="examolemirsalin@gmail.com",  address="mirpur" where id=7;
+Query OK, 0 rows affected (0.001 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+MariaDB [new_db]> delete from students where id=6;
+Query OK, 1 row affected (0.034 sec)
+
+MariaDB [new_db]> select * from students;
++----+----------+---------------------------+---------+-------------+
+| id | name     | email                     | address | is_inactive |
++----+----------+---------------------------+---------+-------------+
+|  1 | Arif     | examole@gmail.com         | NULL    |           0 |
+|  2 | jaber    | exampjaberle@gmail.com    | NULL    |           1 |
+|  3 | safi     | exampsafile@gmail.com     | malibag |           1 |
+|  4 | munna    | exampmunna@gmail.com      | dhaka   |           1 |
+|  5 | mursalin | examolemirsalin@gmail.com | mirpur  |           1 |
++----+----------+---------------------------+---------+-------------+
+5 rows in set (0.001 sec)
+
+MariaDB [new_db]> alter table students add column phone varchar(20) after email;
+Query OK, 0 rows affected (0.080 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [new_db]> desc students;
++-------------+-----------------+------+-----+---------+----------------+
+| Field       | Type            | Null | Key | Default | Extra          |
++-------------+-----------------+------+-----+---------+----------------+
+| id          | int(5) unsigned | NO   | PRI | NULL    | auto_increment |
+| name        | varchar(100)    | NO   |     | NULL    |                |
+| email       | varchar(100)    | YES  | UNI | NULL    |                |
+| phone       | varchar(20)     | YES  |     | NULL    |                |
+| address     | varchar(255)    | YES  |     | NULL    |                |
+| is_inactive | tinyint(4)      | YES  |     | 0       |                |
++-------------+-----------------+------+-----+---------+----------------+
+6 rows in set (0.021 sec)
+
+MariaDB [new_db]> select * from students;
++----+----------+---------------------------+-------+---------+-------------+
+| id | name     | email                     | phone | address | is_inactive |
++----+----------+---------------------------+-------+---------+-------------+
+|  1 | Arif     | examole@gmail.com         | NULL  | NULL    |           0 |
+|  2 | jaber    | exampjaberle@gmail.com    | NULL  | NULL    |           1 |
+|  3 | safi     | exampsafile@gmail.com     | NULL  | malibag |           1 |
+|  4 | munna    | exampmunna@gmail.com      | NULL  | dhaka   |           1 |
+|  5 | mursalin | examolemirsalin@gmail.com | NULL  | mirpur  |           1 |
++----+----------+---------------------------+-------+---------+-------------+
+5 rows in set (0.001 sec)
+
+MariaDB [new_db]> update students set phone ="01765556556", address="Rangpur" where id=3;
+Query OK, 1 row affected (0.030 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [new_db]> select * from students;
++----+----------+---------------------------+-------------+---------+-------------+
+| id | name     | email                     | phone       | address | is_inactive |
++----+----------+---------------------------+-------------+---------+-------------+
+|  1 | Arif     | examole@gmail.com         | NULL        | NULL    |           0 |
+|  2 | jaber    | exampjaberle@gmail.com    | NULL        | NULL    |           1 |
+|  3 | safi     | exampsafile@gmail.com     | 01765556556 | Rangpur |           1 |
+|  4 | munna    | exampmunna@gmail.com      | NULL        | dhaka   |           1 |
+|  5 | mursalin | examolemirsalin@gmail.com | NULL        | mirpur  |           1 |
++----+----------+---------------------------+-------------+---------+-------------+
+5 rows in set (0.001 sec)
+
+MariaDB [new_db]> select * from students where id=3;
++----+------+-----------------------+-------------+---------+-------------+
+| id | name | email                 | phone       | address | is_inactive |
++----+------+-----------------------+-------------+---------+-------------+
+|  3 | safi | exampsafile@gmail.com | 01765556556 | Rangpur |           1 |
++----+------+-----------------------+-------------+---------+-------------+
+1 row in set (0.001 sec)
+
+MariaDB [new_db]> desc test;
+ERROR 1146 (42S02): Table 'new_db.test' doesn't exist
+MariaDB [new_db]> desc new;
+ERROR 1146 (42S02): Table 'new_db.new' doesn't exist
+MariaDB [new_db]> create table result
+    ->     (
+    ->     id int unsigned primary key auto_increment,
+    ->     student_id int(11) not null,
+    ->     score float,
+    ->     exam_type varchar(100)
+    ->      );
+Query OK, 0 rows affected (0.181 sec)
+
+MariaDB [new_db]> show result;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'result' at line 1
+MariaDB [new_db]> show tables;
++------------------+
+| Tables_in_new_db |
++------------------+
+| result           |
+| students         |
++------------------+
+2 rows in set (0.001 sec)
+
+MariaDB [new_db]> desc result;
++------------+------------------+------+-----+---------+----------------+
+| Field      | Type             | Null | Key | Default | Extra          |
++------------+------------------+------+-----+---------+----------------+
+| id         | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| student_id | int(11)          | NO   |     | NULL    |                |
+| score      | float            | YES  |     | NULL    |                |
+| exam_type  | varchar(100)     | YES  |     | NULL    |                |
++------------+------------------+------+-----+---------+----------------+
+4 rows in set (0.022 sec)
+
+MariaDB [new_db]> insert into result (student_id, score, exam_type) values(1, 90, "Mid-1");
+Query OK, 1 row affected (0.037 sec)
+
+MariaDB [new_db]> insert into result (student_id, score, exam_type) values(2, 80, "Mid-1");
+Query OK, 1 row affected (0.025 sec)
+
+MariaDB [new_db]> insert into result (student_id, score, exam_type) values(3, 70, "Mid-1");
+Query OK, 1 row affected (0.050 sec)
+
+MariaDB [new_db]> insert into result (student_id, score, exam_type) values(4, 60, "Mid-1");
+Query OK, 1 row affected (0.049 sec)
+
+MariaDB [new_db]> insert into result (student_id, score, exam_type) values(5, 50, "Mid-2");
+Query OK, 1 row affected (0.024 sec)
+
+MariaDB [new_db]>
+MariaDB [new_db]> select * from result;
++----+------------+-------+-----------+
+| id | student_id | score | exam_type |
++----+------------+-------+-----------+
+|  1 |          1 |    90 | Mid-1     |
+|  2 |          2 |    80 | Mid-1     |
+|  3 |          3 |    70 | Mid-1     |
+|  4 |          4 |    60 | Mid-1     |
+|  5 |          5 |    50 | Mid-2     |
++----+------------+-------+-----------+
+5 rows in set (0.001 sec)
+
+MariaDB [new_db]> insert into result (student_id, score, exam_type) values(1, 49, "Mid-2");
+Query OK, 1 row affected (0.027 sec)
+
+MariaDB [new_db]> select * from result;
++----+------------+-------+-----------+
+| id | student_id | score | exam_type |
++----+------------+-------+-----------+
+|  1 |          1 |    90 | Mid-1     |
+|  2 |          2 |    80 | Mid-1     |
+|  3 |          3 |    70 | Mid-1     |
+|  4 |          4 |    60 | Mid-1     |
+|  5 |          5 |    50 | Mid-2     |
+|  6 |          1 |    49 | Mid-2     |
++----+------------+-------+-----------+
+6 rows in set (0.001 sec)
+
+MariaDB [new_db]> select r.student_id, s.name, r.score, r.exam_type
+    -> from students as s, result r
+    -> where r.student_id =s.id;
++------------+----------+-------+-----------+
+| student_id | name     | score | exam_type |
++------------+----------+-------+-----------+
+|          1 | Arif     |    90 | Mid-1     |
+|          2 | jaber    |    80 | Mid-1     |
+|          3 | safi     |    70 | Mid-1     |
+|          4 | munna    |    60 | Mid-1     |
+|          5 | mursalin |    50 | Mid-2     |
+|          1 | Arif     |    49 | Mid-2     |
++------------+----------+-------+-----------+
+6 rows in set (0.002 sec)
+
+MariaDB [new_db]> select r.student_id, s.name Full_name, r.score as marks, r.exam_type
+    -> from students as s, result r
+    -> where r.student_id =s.id;
++------------+-----------+-------+-----------+
+| student_id | Full_name | marks | exam_type |
++------------+-----------+-------+-----------+
+|          1 | Arif      |    90 | Mid-1     |
+|          2 | jaber     |    80 | Mid-1     |
+|          3 | safi      |    70 | Mid-1     |
+|          4 | munna     |    60 | Mid-1     |
+|          5 | mursalin  |    50 | Mid-2     |
+|          1 | Arif      |    49 | Mid-2     |
++------------+-----------+-------+-----------+
+6 rows in set (0.001 sec)
+
+MariaDB [new_db]> select r.student_id, s.name Full_name, r.score as marks, r.exam_type
+    -> from students as s, result r
+    -> where r.student_id =s.id  and r.exam_type = "Mid-1";
++------------+-----------+-------+-----------+
+| student_id | Full_name | marks | exam_type |
++------------+-----------+-------+-----------+
+|          1 | Arif      |    90 | Mid-1     |
+|          2 | jaber     |    80 | Mid-1     |
+|          3 | safi      |    70 | Mid-1     |
+|          4 | munna     |    60 | Mid-1     |
++------------+-----------+-------+-----------+
+4 rows in set (0.001 sec)
+
+MariaDB [new_db]> select * from result;
++----+------------+-------+-----------+
+| id | student_id | score | exam_type |
++----+------------+-------+-----------+
+|  1 |          1 |    90 | Mid-1     |
+|  2 |          2 |    80 | Mid-1     |
+|  3 |          3 |    70 | Mid-1     |
+|  4 |          4 |    60 | Mid-1     |
+|  5 |          5 |    50 | Mid-2     |
+|  6 |          1 |    49 | Mid-2     |
++----+------------+-------+-----------+
+6 rows in set (0.001 sec)
+
+MariaDB [new_db]> insert into result (student_id, score, exam_type) values(1, 40, "Mid-2");
+Query OK, 1 row affected (0.059 sec)
+
+MariaDB [new_db]> select * from result;
++----+------------+-------+-----------+
+| id | student_id | score | exam_type |
++----+------------+-------+-----------+
+|  1 |          1 |    90 | Mid-1     |
+|  2 |          2 |    80 | Mid-1     |
+|  3 |          3 |    70 | Mid-1     |
+|  4 |          4 |    60 | Mid-1     |
+|  5 |          5 |    50 | Mid-2     |
+|  6 |          1 |    49 | Mid-2     |
+|  7 |          1 |    40 | Mid-2     |
++----+------------+-------+-----------+
+7 rows in set (0.001 sec)
+
+MariaDB [new_db]> update result set exam_type="mid-2" , score= 40  where id=1;
+Query OK, 1 row affected (0.029 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [new_db]> select * from result;
++----+------------+-------+-----------+
+| id | student_id | score | exam_type |
++----+------------+-------+-----------+
+|  1 |          1 |    40 | mid-2     |
+|  2 |          2 |    80 | Mid-1     |
+|  3 |          3 |    70 | Mid-1     |
+|  4 |          4 |    60 | Mid-1     |
+|  5 |          5 |    50 | Mid-2     |
+|  6 |          1 |    49 | Mid-2     |
+|  7 |          1 |    40 | Mid-2     |
++----+------------+-------+-----------+
+7 rows in set (0.001 sec)
+
+MariaDB [new_db]> delete from result where id=7;
+Query OK, 1 row affected (0.031 sec)
+
+MariaDB [new_db]> select * from result;
++----+------------+-------+-----------+
+| id | student_id | score | exam_type |
++----+------------+-------+-----------+
+|  1 |          1 |    40 | mid-2     |
+|  2 |          2 |    80 | Mid-1     |
+|  3 |          3 |    70 | Mid-1     |
+|  4 |          4 |    60 | Mid-1     |
+|  5 |          5 |    50 | Mid-2     |
+|  6 |          1 |    49 | Mid-2     |
++----+------------+-------+-----------+
+6 rows in set (0.001 sec)
+
+MariaDB [new_db]> create view vw_student_result as
+    -> select r.student_id, s.name, r.score, r.exam_type
+    -> from students as s, result r
+    -> where r.student_id =s.id;
+Query OK, 0 rows affected (0.032 sec)
+
+MariaDB [new_db]> show tables;
++-------------------+
+| Tables_in_new_db  |
++-------------------+
+| result            |
+| students          |
+| vw_student_result |
++-------------------+
+3 rows in set (0.001 sec)
+
+MariaDB [new_db]> selct *  from vw_student_result;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'selct *  from vw_student_result' at line 1
+MariaDB [new_db]> select *  from vw_student_result;
++------------+----------+-------+-----------+
+| student_id | name     | score | exam_type |
++------------+----------+-------+-----------+
+|          1 | Arif     |    40 | mid-2     |
+|          2 | jaber    |    80 | Mid-1     |
+|          3 | safi     |    70 | Mid-1     |
+|          4 | munna    |    60 | Mid-1     |
+|          5 | mursalin |    50 | Mid-2     |
+|          1 | Arif     |    49 | Mid-2     |
++------------+----------+-------+-----------+
+6 rows in set (0.002 sec)
+
+MariaDB [new_db]> select name, marks from vw_student_result where marks <60;
+ERROR 1054 (42S22): Unknown column 'marks' in 'field list'
+MariaDB [new_db]> select name, score from vw_student_result where score <60;
++----------+-------+
+| name     | score |
++----------+-------+
+| Arif     |    40 |
+| mursalin |    50 |
+| Arif     |    49 |
++----------+-------+
+3 rows in set (0.002 sec)
+
+MariaDB [new_db]> select score from vw_student_result where id=1;
+ERROR 1054 (42S22): Unknown column 'id' in 'where clause'
+MariaDB [new_db]> select score from vw_student_result where student_id=1;
++-------+
+| score |
++-------+
+|    40 |
+|    49 |
++-------+
+2 rows in set (0.001 sec)
+
+MariaDB [new_db]> select name, score, exam_type from vw_student_result where student_id=1;
++------+-------+-----------+
+| name | score | exam_type |
++------+-------+-----------+
+| Arif |    40 | mid-2     |
+| Arif |    49 | Mid-2     |
++------+-------+-----------+
+2 rows in set (0.001 sec)
+
+MariaDB [new_db]> select name, score, exam_type from vw_student_result where mid-1<40;
+ERROR 1054 (42S22): Unknown column 'mid' in 'where clause'
+MariaDB [new_db]> select name, score, exam_type from vw_student_result where exam_type = "mid-2", score<40;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ' score<40' at line 1
+MariaDB [new_db]> select name, score, exam_type from vw_student_result where exam_type = "mid-2" and score<40;
+Empty set (0.002 sec)
+
+MariaDB [new_db]> select name, score, exam_type from vw_student_result where exam_type = "mid-2" and score<70;
++----------+-------+-----------+
+| name     | score | exam_type |
++----------+-------+-----------+
+| Arif     |    40 | mid-2     |
+| mursalin |    50 | Mid-2     |
+| Arif     |    49 | Mid-2     |
++----------+-------+-----------+
+3 rows in set (0.001 sec)
+
+MariaDB [new_db]>

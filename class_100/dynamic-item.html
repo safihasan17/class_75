@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <link rel="stylesheet" href="css/jquery-ui.css">
+
+
+
+
+    <style>
+        .remove{
+            color: red;
+        }
+
+        li{
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+   
+    <input type="text" name="" id="">
+    <button>ADD</button>
+
+    <ul></ul>
+    
+
+    <script src="js/jquery-4.0.0.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+
+    <script>
+        $('button').click(function(){
+            let val = $('input').val();
+            $('ul').append(`<li>${val} <button class='remove'> &times;</button></li> ` );
+            $('input').val('');
+           
+        })
+
+        $('ul').on('click', '.remove', (e)=>{
+            // console.log(e.target.closest('li'));
+            e.target.closest('li').remove();
+        })
+    </script>
+
+
+</body>
+</html>

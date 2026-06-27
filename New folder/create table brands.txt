@@ -1,0 +1,54 @@
+create table brands
+     (
+     id int unsigned primary key auto_increment,
+     Name varchar(100)
+    );
+
+
+
+create table categories
+    (
+     id int unsigned primary key auto_increment,
+      Name varchar(100)
+     );
+
+
+
+create table products
+       (
+         id int unsigned primary key auto_increment,
+        product_name varchar(100),
+        brand_id int(11),
+        category_id int(11),
+         price float,
+         is_active tinyint(4)
+        );
+
+
+insert into brands(name) values ("APPle");
+insert into brands(name) values ("Dell");
+insert into brands(name) values ("Samsung");
+
+
+insert into categories(name) values ("Mobile");
+insert into categories(name) values ("Laptop");
+insert into categories(name) values ("Desktop");
+
+
+ insert into products(product_name, brand_id, category_id, price, is_active) values("Mobile", 1,1, 1500, 1);
+insert into products(product_name, brand_id, category_id, price, is_active) values("PC",2,2, 1800, 1);
+insert into products(product_name, brand_id, category_id, price, is_active) values("desktop",3,3, 1200, 0);
+insert into products(product_name, brand_id, category_id, price, is_active) values("laptop",4,4, 1300, 1);
+insert into products(product_name, brand_id, category_id, price, is_active) values("cpu",5,5, 1000, 0);
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,55 @@
+crud- create read, update , delete
+
+insert into students(name, email, is_inactive) values ("Arif", "examole@gmail.com" , 0);
+insert into students(name, email, is_inactive) values ("jaber", "exampjaberle@gmail.com" , 1);
+insert into students(name, email, is_inactive, address) values ("safi", "exampsafile@gmail.com" , 1, "malibag");
+
+insert into students(name, email, is_inactive, address) values ("munna", "exampmunna@gmail.com" , 1, "dhaka");
+insert into students(name, email, is_inactive, address) values ("mursalin", "exampsae@gmail.com" , 1, "malibag2");
+insert into students(name, email, is_inactive, address) values ("safi6", "exampsafilue@gmail.com" , 0, "malibag3");
+
+
+update students set name="kairul" , email="khairl@gmail.com" where id=6;
+update students set email ="examolemirsalin@gmail.com",  address="mirpur" where id=7;
+
+delete from students where id=6;
+
+alter table students add column phone varchar(20) after email;
+
+update students set phone ="01765556556", address="Rangpur" where id=3;
+
+
+create table result
+    (
+    id int unsigned primary key auto_increment,
+    student_id int(11) not null,
+    score float,
+    exam_type varchar(100)
+     );
+
+insert into result (student_id, score, exam_type) values(1, 90, "Mid-1");
+insert into result (student_id, score, exam_type) values(2, 80, "Mid-1");
+insert into result (student_id, score, exam_type) values(3, 70, "Mid-1");
+insert into result (student_id, score, exam_type) values(4, 60, "Mid-1");
+insert into result (student_id, score, exam_type) values(5, 50, "Mid-2");
+insert into result (student_id, score, exam_type) values(1, 49, "Mid-2");
+
+
+select r.student_id, s.name, r.score, r.exam_type 
+from students as s, result r 
+where r.student_id =s.id;
+
+select r.student_id, s.name Full_name, r.score as marks, r.exam_type 
+from students as s, result r 
+where r.student_id =s.id  and r.exam_type = "Mid-1";
+
+
+
+
+
+
+
+
+
+
+
