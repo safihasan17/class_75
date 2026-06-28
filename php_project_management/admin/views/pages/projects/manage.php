@@ -2,13 +2,17 @@
 
 $msg = "";
 require_once 'models/projectclass.php';
+require_once 'models/projectcatagoryclass.php';
 
-function formatDate($date) {
+function formatDate($date)
+{
     if (!$date || $date == '1000-01-01 00:00:00') return '-';
     return date('d M Y', strtotime($date));
 }
 
+$categories = ProjectCategory::readALL();
 
+$rows = Project::readALL();
 
 if (isset($_POST['status_id'])) {
     $id = $_POST['status_id'];
@@ -37,7 +41,7 @@ if (isset($_POST['delete_id'])) {
 }
 
 
-$rows = Project::readALL();
+
 
 ?>
 
@@ -66,14 +70,29 @@ $rows = Project::readALL();
                     <div class="col-12">
                         <div class="card mb-4">
                             <div class="card-header">
-                                <a class="btn btn-sm btn-dark" href="create_project">Create Project</a>
+
+                            <div class="row">
+                                 <div class="col-12 col-md-6">
+                                    <a class="btn btn-sm btn-dark" href="create_project">Create Project</a>
+                                </div>
+
+                                <div class="col-12 col-md-6 text-end">
+                                    <select name="" id="category-filter">
+                                        <option value="0">ALL</option>
+                                        <?php foreach ($categories as $category): ?>
+                                            <option value="<?= $category["id"]; ?>"> <?= $category["name"];  ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                               
                             </div>
 
                             <?php if ($msg): ?>
                                 <div class="alert alert-info mx-3 mt-2"><?= $msg; ?></div>
                             <?php endif; ?>
 
-                            <div class="card-body p-0">
+                            <div class="card-body p-0" id="project-list">
                                 <div class="table-responsive">
                                     <table class="table table-bordered text-primary">
                                         <thead>
@@ -94,8 +113,8 @@ $rows = Project::readALL();
 
                                             <?php foreach ($rows as $items): ?>
                                                 <?php
-                                                // Budget: phase_budget আসলে phase allocated_cost এর SUM (auto-synced)
-                                                // fallback হিসেবে project এর budget_cost দেখাই
+                                                // Budget: phase_budget asole phase allocated_cost er SUM (auto-synced)
+                                                // fallback hiseve project er budget_cost dekaai
                                                 $phaseBudget  = (float)$items['phase_budget'];
                                                 $phaseActual  = (float)$items['phase_actual'];
                                                 $budgetDisplay = $phaseBudget > 0 ? $phaseBudget : (float)$items['budget_cost'];
@@ -113,8 +132,8 @@ $rows = Project::readALL();
                                                     $barColor = 'bg-secondary';
                                                 }
 
-                                                // ✅ Status — শুধুমাত্র completion % এর উপর ভিত্তি করে
-                                                // actual_starting_time / actual_ending_time এ নির্ভর করলে ভুল দেখায়
+                                                // ✅ Status —  completion % 
+                                                // actual_starting_time / actual_ending_time 
                                                 if ($percent >= 100) {
                                                     $status     = 'Completed';
                                                     $badgeClass = 'bg-primary';
@@ -218,3 +237,94 @@ $rows = Project::readALL();
         </div>
     </main>
 </div>
+
+
+
+
+
+<script src="<?= BASE_URL_ADMIN; ?>assets/js/jquery-4.0.0.min.js"></script>
+
+<script>
+    $("#category-filter").on("change", function() {
+        let categoryId = $(this).val();
+        $.ajax({
+            url: `api/get-projects?id=${categoryId}`,
+            type: "get",
+            // dataType: "json",
+            success: function(projects) {
+                let html = "";
+                projects.forEach(item => {
+                    let phaseBudget  = parseFloat(item.phase_budget);
+                    let phaseActual  = parseFloat(item.phase_actual);
+                    let budgetDisplay = phaseBudget > 0 ? phaseBudget : parseFloat(item.budget_cost);
+                    let actualDisplay = phaseActual > 0 ? phaseActual : parseFloat(item.actual_cost);
+                    let percent = Math.min(parseFloat(item.completion_percent), 100);
+
+                    // Progress bar color
+                    let barColor = percent >= 100 ? 'bg-success' :
+                                   percent >= 60  ? 'bg-info' :
+                                   percent >= 30  ? 'bg-warning' : 'bg-secondary';
+
+                    // Status badge
+                    let status, badgeClass;
+                    if (percent >= 100)     { status = 'Completed';   badgeClass = 'bg-primary'; }
+                    else if (percent >= 75) { status = 'Almost Done'; badgeClass = 'bg-info'; }
+                    else if (percent >= 30) { status = 'In Progress'; badgeClass = 'bg-success'; }
+                    else if (percent > 0)   { status = 'Started';     badgeClass = 'bg-warning text-dark'; }
+                    else                    { status = 'Pending';     badgeClass = 'bg-secondary'; }
+
+                    // Over budget
+                    let isOver = actualDisplay > budgetDisplay && budgetDisplay > 0;
+
+                    html += `
+                    <tr class="align-middle">
+                        <td>${item.id}</td>
+                        <td><a href="project_detail?id=${item.id}">${item.title}</a></td>
+                        <td>${item.client_name}</td>
+                        <td>${item.category_name}</td>
+                        <td>${item.user_name}</td>
+                        <td>
+                            <span class="fw-semibold">${budgetDisplay.toLocaleString('en', {minimumFractionDigits:2})}</span>
+                        </td>
+                        <td>
+                            <span class="${isOver ? 'text-danger fw-semibold' : ''}">
+                                ${actualDisplay.toLocaleString('en', {minimumFractionDigits:2})}
+                            </span>
+                            ${isOver ? '<br><small class="text-danger"><i class="fa fa-arrow-up"></i> Over Budget</small>' : ''}
+                        </td>
+                        <td style="min-width:130px;">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="progress flex-grow-1" style="height:10px; border-radius:6px;">
+                                    <div class="progress-bar ${barColor}" role="progressbar"
+                                        style="width:${percent}%;"
+                                        aria-valuenow="${percent}" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+                                </div>
+                                <span class="small fw-semibold" style="min-width:38px;">${percent}%</span>
+                            </div>
+                        </td>
+                        <td><span class="badge ${badgeClass}">${status}</span></td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="edit_project?id=${item.id}" class="btn btn-sm btn-default">
+                                    <i class="fa fa-edit text-success"></i>
+                                </a>
+                                <form action="" method="POST">
+                                    <input type="hidden" name="delete_id" value="${item.id}">
+                                    <button type="submit" class="btn btn-sm btn-default">
+                                        <i class="fa fa-trash text-danger"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>`;
+                });
+
+                $("#project-list table tbody").html(html); 
+            },
+            error: function(xhr) {
+                console.log(xhr.responseText);
+            }
+        });
+    });
+</script>

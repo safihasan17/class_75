@@ -40,11 +40,12 @@ class Phases
         }
     }
 
-    static public function readALL(){
+    static public function readALL($_pg = 1, $_limit= 2){
         global $db;
-        $sql = 'SELECT p.id, pc.name as project_category, p.title 
+        $skip = ($_pg -1)*$_limit;
+        $sql = "SELECT p.id, pc.name as project_category, p.title 
         FROM phases as p , project_categories as pc 
-        where p.project_category_id = pc.id';
+        where p.project_category_id = pc.id  ORDER BY id DESC limit $_limit OFFSET $skip";
         $result = $db->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
     }
@@ -65,6 +66,18 @@ class Phases
             return true;
         }
     }
+
+
+    static public function getpageNo($_no_of_rows){
+      global $db;
+      $sql = "select count(id) as total from phases";
+      $result = $db->query($sql);
+      $row = $result->fetch_assoc();
+      // return $row;
+
+      return ceil($row['total']/$_no_of_rows);
+    }
+
 
 
    

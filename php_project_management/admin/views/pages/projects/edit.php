@@ -184,7 +184,7 @@ if (isset($_POST['btn_submit'])) {
         <form action="" method="POST" enctype="multipart/form-data">
           <div class="row g-4">
 
-            <div class="col-6">
+            <div class=" col-12 col-md-6">
               <div class="form-group">
                 <label class="form-label text-primary">Title</label>
                 <div class="form-control-wrap">
@@ -193,7 +193,7 @@ if (isset($_POST['btn_submit'])) {
               </div>
             </div>
 
-            <div class="col-6">
+            <div class=" col-12 col-md-6">
               <div class="form-group">
                 <label class="form-label text-primary">Client</label>
                 <div class="form-control-wrap">
@@ -207,7 +207,7 @@ if (isset($_POST['btn_submit'])) {
               </div>
             </div>
 
-            <div class="col-6">
+            <div class=" col-12 col-md-6">
               <div class="form-group">
                 <label class="form-label text-primary">Project Category</label>
                 <div class="form-control-wrap">
@@ -221,7 +221,7 @@ if (isset($_POST['btn_submit'])) {
               </div>
             </div>
 
-            <div class="col-6">
+            <div class=" col-12 col-md-6">
               <div class="form-group">
                 <label class="form-label text-primary">User</label>
                 <div class="form-control-wrap">
@@ -235,7 +235,7 @@ if (isset($_POST['btn_submit'])) {
               </div>
             </div>
 
-            <div class="col-6">
+            <div class=" col-12 col-md-6">
               <div class="form-group">
                 <label class="form-label text-primary">Expected Starting Time</label>
                 <div class="form-control-wrap">
@@ -244,7 +244,7 @@ if (isset($_POST['btn_submit'])) {
               </div>
             </div>
 
-            <div class="col-6">
+            <div class=" col-12 col-md-6">
               <div class="form-group">
                 <label class="form-label text-primary">Expected Ending Time</label>
                 <div class="form-control-wrap">
@@ -253,7 +253,7 @@ if (isset($_POST['btn_submit'])) {
               </div>
             </div>
 
-            <div class="col-6">
+            <div class=" col-12 col-md-6">
               <div class="form-group">
                 <label class="form-label text-primary">Actual Starting Time</label>
                 <div class="form-control-wrap">
@@ -262,7 +262,7 @@ if (isset($_POST['btn_submit'])) {
               </div>
             </div>
 
-            <div class="col-6">
+            <div class=" col-12 col-md-6">
               <div class="form-group">
                 <label class="form-label text-primary">Actual Ending Time</label>
                 <div class="form-control-wrap">
@@ -271,7 +271,7 @@ if (isset($_POST['btn_submit'])) {
               </div>
             </div>
 
-            <div class="col-6">
+            <div class=" col-12 col-md-6">
               <div class="form-group">
                 <label class="form-label text-primary">Actual Cost</label>
                 <div class="form-control-wrap">
@@ -280,7 +280,7 @@ if (isset($_POST['btn_submit'])) {
               </div>
             </div>
 
-            <div class="col-6">
+            <div class=" col-12 col-md-6">
               <div class="form-group">
                 <label class="form-label text-primary">Budget Cost</label>
                 <div class="form-control-wrap">
@@ -289,7 +289,7 @@ if (isset($_POST['btn_submit'])) {
               </div>
             </div>
 
-            <div class="col-12">
+            <div class=" col-12 col-md-6">
               <div class="form-group">
                 <button type="submit" name="btn_submit" class="btn btn-lg btn-primary">Update</button>
               </div>

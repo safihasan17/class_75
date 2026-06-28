@@ -2,7 +2,10 @@
 if(isset($_GET['page'])){
     $page = $_GET['page'];
 
-    if($page == 'dashboard'){
+    if(isset($_SESSION['id']) == false){
+        include_once('views/pages/auth/login.php');
+    }
+    elseif($page == 'dashboard'){
         include_once('views/pages/dashboard.php');
     } 
     elseif($page == 'form' || $page == 'form.php'){
@@ -26,6 +29,10 @@ if(isset($_GET['page'])){
     elseif($page == 'pos'){
         include_once('views/pages/pos.php');
     }
+    elseif($page == 'login'){
+        include_once('views/pages/auth/login.php');
+    }
+
     elseif($page == 'blog'){
         include_once('views/pages/blog.php');
     }

@@ -82,6 +82,9 @@ class User
       return ceil($row['total']/$_no_of_rows);
     }
 
+
+    
+
 }
 
 ?>

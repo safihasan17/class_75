@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 19, 2026 at 10:29 PM
+-- Generation Time: Jun 27, 2026 at 06:32 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -63,8 +63,7 @@ CREATE TABLE `phases` (
 --
 
 INSERT INTO `phases` (`id`, `project_category_id`, `title`) VALUES
-(1, 1, 'Requirement Analysis'),
-(2, 1, 'Design & Architecture'),
+(2, 5, 'neww'),
 (3, 1, 'Development'),
 (4, 1, 'Testing & QA'),
 (5, 1, 'Deployment & Maintenance'),
@@ -88,7 +87,16 @@ INSERT INTO `phases` (`id`, `project_category_id`, `title`) VALUES
 (23, 5, 'Solution Design'),
 (33, 32, ''),
 (34, 26, ''),
-(35, 23, 'design');
+(35, 23, 'design'),
+(39, 4, 'nrw'),
+(40, 4, 'for hotel management'),
+(41, 4, 'development'),
+(42, 2, 'login system'),
+(43, 2, 'data update'),
+(44, 2, 'background service'),
+(45, 2, 'got   info'),
+(46, 2, 'ggggg'),
+(47, 2, 'deveeeee');
 
 -- --------------------------------------------------------
 
@@ -102,8 +110,8 @@ CREATE TABLE `phase_costs_and_timing` (
   `project_id` int(11) NOT NULL,
   `allocated_cost` decimal(15,2) DEFAULT NULL,
   `actual_cost` decimal(15,2) DEFAULT NULL,
-  `actual_time` datetime DEFAULT NULL,
-  `expected_time` datetime DEFAULT NULL
+  `actual_time` datetime NOT NULL,
+  `expected_time` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -112,25 +120,28 @@ CREATE TABLE `phase_costs_and_timing` (
 
 INSERT INTO `phase_costs_and_timing` (`id`, `phase_id`, `project_id`, `allocated_cost`, `actual_cost`, `actual_time`, `expected_time`) VALUES
 (24, 1, 5, 80000.00, 75000.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(25, 3, 5, 150000.00, 160000.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(26, 2, 6, 90000.00, 40000.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(27, 4, 6, 100000.00, 50000.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(28, 6, 7, 70000.00, 72000.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(29, 8, 7, 200000.00, 210000.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(30, 7, 8, 120000.00, 0.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(31, 9, 8, 180000.00, 0.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(32, 11, 9, 30000.00, 28000.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(33, 13, 9, 40000.00, 38000.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(34, 12, 10, 25000.00, 18000.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(35, 14, 10, 35000.00, 22000.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(36, 16, 11, 60000.00, 58000.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(37, 18, 11, 75000.00, 70000.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(38, 17, 12, 100000.00, 95000.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(39, 19, 12, 120000.00, 110000.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(40, 21, 13, 15000.00, 14000.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(41, 22, 13, 20000.00, 19000.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(42, 22, 14, 25000.00, 0.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(43, 23, 14, 30000.00, 0.00, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(42, 22, 14, 25000.00, 0.00, '2026-06-24 00:00:00', '2026-07-15 00:00:00'),
+(43, 23, 14, 30000.00, 25000.00, '2026-07-01 00:00:00', '2026-07-15 00:00:00'),
+(47, 4, 19, 4000.00, 3500.00, '2026-06-25 00:00:00', '2026-06-30 00:00:00'),
+(48, 16, 20, 8000.00, 7000.00, '2026-06-26 00:00:00', '2026-07-09 00:00:00'),
+(49, 40, 19, 45000.00, 50000.00, '2026-06-25 00:00:00', '2026-07-15 00:00:00'),
+(50, 40, 17, 75000.00, 80000.00, '2026-06-26 00:00:00', '2026-06-27 00:00:00'),
+(51, 7, 17, 90000.00, 70000.00, '2026-06-24 00:00:00', '2026-08-24 00:00:00'),
+(52, 10, 17, 70000.00, 75000.00, '2026-06-30 00:00:00', '2026-07-22 00:00:00'),
+(53, 9, 21, 17000.00, 16000.00, '2026-06-30 00:00:00', '2026-07-09 00:00:00'),
+(54, 10, 21, 7000.00, 6000.00, '2026-07-01 00:00:00', '2026-07-09 00:00:00'),
+(55, 12, 21, 9000.00, 8000.00, '2026-07-14 00:00:00', '2026-07-22 00:00:00'),
+(56, 11, 22, 4000.00, 3500.00, '2026-07-15 00:00:00', '2026-07-15 00:00:00'),
+(57, 22, 22, 9000.00, 8000.00, '2026-07-15 00:00:00', '2026-07-15 00:00:00'),
+(58, 41, 22, 6000.00, 5000.00, '2026-06-30 00:00:00', '2026-07-15 00:00:00'),
+(59, 4, 21, 7000.00, 8000.00, '2026-06-30 00:00:00', '2026-07-15 00:00:00'),
+(60, 44, 22, 5000.00, 4000.00, '2026-07-01 00:00:00', '2026-07-07 00:00:00'),
+(61, 42, 25, 7000.00, 5000.00, '2026-07-08 00:00:00', '2026-07-15 00:00:00'),
+(63, 25, 42, 4000.00, 5000.00, '2026-06-30 00:00:00', '2026-07-14 00:00:00'),
+(64, 25, 43, 8000.00, 7000.00, '2026-07-07 00:00:00', '2026-07-15 00:00:00'),
+(65, 25, 42, 800.00, 700.00, '2026-06-30 00:00:00', '2026-07-07 00:00:00'),
+(66, 45, 25, 8000.00, 7000.00, '2026-06-30 00:00:00', '2026-07-15 00:00:00'),
+(67, 23, 25, 9000.00, 7000.00, '2026-06-24 00:00:00', '2026-07-22 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -144,10 +155,10 @@ CREATE TABLE `projects` (
   `client_id` int(11) NOT NULL,
   `project_category_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `expected_starting_time` datetime DEFAULT NULL,
-  `expected_ending_time` datetime DEFAULT NULL,
-  `actual_starting_time` datetime DEFAULT NULL,
-  `actual_ending_time` datetime DEFAULT NULL,
+  `expected_starting_time` datetime NOT NULL,
+  `expected_ending_time` datetime NOT NULL,
+  `actual_starting_time` datetime NOT NULL,
+  `actual_ending_time` datetime NOT NULL,
   `actual_cost` decimal(10,2) DEFAULT NULL,
   `budget_cost` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -157,16 +168,22 @@ CREATE TABLE `projects` (
 --
 
 INSERT INTO `projects` (`id`, `title`, `client_id`, `project_category_id`, `user_id`, `expected_starting_time`, `expected_ending_time`, `actual_starting_time`, `actual_ending_time`, `actual_cost`, `budget_cost`) VALUES
-(5, 'E-Commerce Platform Development', 1, 1, 1, '2025-01-10 09:00:00', '2025-06-10 18:00:00', '2025-01-12 09:00:00', '2025-06-15 18:00:00', 480000.00, 450000.00),
-(6, 'CRM System Upgrade', 2, 1, 2, '2025-02-01 09:00:00', '2025-07-01 18:00:00', '2025-02-03 09:00:00', NULL, 210000.00, 350000.00),
-(7, 'Network Infrastructure Modernization', 3, 2, 1, '2025-03-15 09:00:00', '2025-08-15 18:00:00', '2025-03-15 09:00:00', '2025-08-20 18:00:00', 620000.00, 600000.00),
-(8, 'Data Center Migration', 4, 2, 3, '2025-04-01 09:00:00', '2025-09-01 18:00:00', NULL, NULL, 0.00, 750000.00),
-(9, 'Summer Brand Awareness Campaign', 5, 3, 2, '2025-05-01 09:00:00', '2025-07-01 18:00:00', '2025-05-01 09:00:00', '2025-07-05 18:00:00', 95000.00, 100000.00),
-(10, 'Product Launch Marketing Drive', 1, 3, 4, '2025-06-01 09:00:00', '2025-08-01 18:00:00', '2025-06-02 09:00:00', NULL, 60000.00, 120000.00),
-(11, 'AI Chatbot Feasibility Research', 2, 4, 5, '2025-01-20 09:00:00', '2025-05-20 18:00:00', '2025-01-22 09:00:00', '2025-05-25 18:00:00', 175000.00, 180000.00),
-(12, 'Renewable Energy Tech R&D', 3, 4, 3, '2025-03-01 09:00:00', '2025-10-01 18:00:00', '2025-03-05 09:00:00', NULL, 320000.00, 400000.00),
-(13, 'Business Process Consulting', 4, 5, 4, '2025-02-15 09:00:00', '2025-04-15 18:00:00', '2025-02-15 09:00:00', '2025-04-18 18:00:00', 45000.00, 50000.00),
-(14, 'IT Strategy Advisory', 5, 5, 5, '2025-05-10 09:00:00', '2025-07-10 18:00:00', NULL, NULL, 0.00, 80000.00);
+(5, 'E-Commerce Platform Development', 5, 5, 2, '2026-07-22 00:00:00', '2025-06-10 00:00:00', '2025-01-12 00:00:00', '2026-08-25 00:00:00', 70000.00, 80000.00),
+(6, 'CRM System Upgrade', 2, 1, 2, '2025-02-01 09:00:00', '2025-07-01 18:00:00', '2025-02-03 09:00:00', '0000-00-00 00:00:00', 210000.00, 0.00),
+(7, 'Network Infrastructure Modernization', 3, 2, 1, '2025-03-15 09:00:00', '2025-08-15 18:00:00', '2025-03-15 09:00:00', '2025-08-20 18:00:00', 620000.00, 0.00),
+(8, 'Data Center Migration', 4, 2, 3, '2025-04-01 00:00:00', '2025-09-01 00:00:00', '2026-06-22 00:00:00', '2026-07-01 00:00:00', 780000.00, 0.00),
+(9, 'Summer Brand Awareness Campaign', 5, 3, 2, '2025-05-01 09:00:00', '2025-07-01 18:00:00', '2025-05-01 09:00:00', '2025-07-05 18:00:00', 95000.00, 0.00),
+(10, 'Product Launch Marketing Drive', 1, 3, 4, '2025-06-01 09:00:00', '2025-08-01 18:00:00', '2025-06-02 09:00:00', '0000-00-00 00:00:00', 60000.00, 0.00),
+(11, 'AI Chatbot Feasibility Research', 2, 4, 5, '2025-01-20 09:00:00', '2025-05-20 18:00:00', '2025-01-22 09:00:00', '2025-05-25 18:00:00', 175000.00, 0.00),
+(12, 'Renewable Energy Tech R&D', 3, 4, 3, '2025-03-01 09:00:00', '2025-10-01 18:00:00', '2025-03-05 09:00:00', '0000-00-00 00:00:00', 320000.00, 0.00),
+(13, 'Business Process Consulting', 4, 5, 4, '2025-02-15 09:00:00', '2025-04-15 18:00:00', '2025-02-15 09:00:00', '2025-04-18 18:00:00', 45000.00, 0.00),
+(14, 'IT Strategy Advisory', 5, 5, 5, '2025-05-10 09:00:00', '2025-07-10 18:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0.00, 55000.00),
+(17, 'Hotel_management', 5, 2, 4, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 180000.00, 190000.00),
+(19, 'Hotel management new', 4, 5, 5, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 180000.00, 190000.00),
+(20, 'Mcq testing', 4, 5, 4, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 180000.00, 190000.00),
+(21, 'Edu care', 4, 5, 5, '2026-06-30 00:00:00', '2026-07-07 00:00:00', '2026-07-08 00:00:00', '2026-07-07 00:00:00', 180000.00, 40000.00),
+(22, 'Customer Reationship management', 5, 4, 5, '2026-06-30 00:00:00', '2026-07-08 00:00:00', '2026-07-09 00:00:00', '2026-07-15 00:00:00', 180000.00, 24000.00),
+(25, 'mcq project 2', 4, 2, 4, '2026-06-30 00:00:00', '2026-07-02 00:00:00', '2026-07-07 00:00:00', '2026-07-14 00:00:00', 180000.00, 24000.00);
 
 -- --------------------------------------------------------
 
@@ -227,7 +244,25 @@ INSERT INTO `project_teams` (`id`, `team_id`, `team_role_id`, `team_member_id`) 
 (42, 5, 10, 7),
 (43, 5, 1, 8),
 (44, 12, 10, 9),
-(45, 12, 6, 10);
+(45, 12, 6, 10),
+(46, 15, 1, 10),
+(47, 15, 3, 3),
+(48, 3, 3, 5),
+(49, 16, 2, 10),
+(50, 5, 5, 9),
+(51, 16, 8, 3),
+(52, 5, 4, 1),
+(53, 17, 2, 10),
+(54, 18, 8, 7),
+(55, 6, 4, 7),
+(56, 19, 5, 8),
+(57, 19, 5, 9),
+(58, 20, 6, 5),
+(59, 21, 2, 1),
+(60, 21, 8, 9),
+(61, 24, 8, 10),
+(62, 22, 6, 1),
+(63, 23, 7, 10);
 
 -- --------------------------------------------------------
 
@@ -287,7 +322,22 @@ INSERT INTO `tasks` (`id`, `project_id`, `phase_id`, `title`, `assign_to_team_id
 (39, 13, 21, 'Client Kickoff Meeting', 5),
 (40, 13, 22, 'Solution Blueprint', 5),
 (41, 14, 22, 'Diagnosis Workshop', 12),
-(42, 14, 23, 'Implementation Support Plan', 12);
+(42, 14, 23, 'Implementation Support Plan', 12),
+(43, 19, 21, 'project for hotel', 5),
+(44, 20, 8, 'task s', 15),
+(45, 17, 19, 'analysis', 16),
+(46, 17, 40, 'backend', 16),
+(47, 17, 9, 'validate users', 16),
+(48, 21, 16, 'Edu care project', 17),
+(49, 21, 8, 'implement tsk', 18),
+(50, 21, 4, 'testing', 17),
+(51, 22, 15, 'performace', 20),
+(52, 22, 19, 'test  for database', 21),
+(53, 22, 11, 'market research', 20),
+(54, 22, 22, 'diagonis', 21),
+(55, 22, 41, 'dvt', 20),
+(56, 25, 43, 'neeeee', 22),
+(57, 25, 43, 'gggg', 22);
 
 -- --------------------------------------------------------
 
@@ -315,7 +365,18 @@ INSERT INTO `teams` (`id`, `name`, `project_id`) VALUES
 (7, 'Cloud Migration Team', 8),
 (8, 'Social Media Growth Team', 10),
 (9, 'AI Prototype Lab', 12),
-(12, 'ABC_TEAM', 14);
+(12, 'ABC_TEAM', 14),
+(15, 'new team', 20),
+(16, 'Analysis team', 17),
+(17, 'edu team', 21),
+(18, 'database team', 21),
+(19, 'mcq generate team', 18),
+(20, 'crm team', 22),
+(21, 'crm database', 22),
+(22, 'teams for new project', 25),
+(23, 'data teams', 25),
+(24, 'database team', 25),
+(25, 'database tea', 25);
 
 -- --------------------------------------------------------
 
@@ -394,7 +455,7 @@ INSERT INTO `users` (`id`, `name`, `email`, `role_id`, `password`) VALUES
 (2, 'Bob Smith', 'bob.smith@example.com', 2, 'bobSecure!45'),
 (3, 'Carla Mendoza', 'carla.m@example.com', 2, 'CarlaM2024'),
 (4, 'David Kim', 'david.kim@example.com', 3, 'dkim_pass99'),
-(5, 'Eva Green', 'eva.green@example.com', 3, 'evaG$77green');
+(5, 'Eva Green', 'eva.blue@example.com', 2, 'evaG$77green');
 
 --
 -- Indexes for dumped tables
@@ -486,19 +547,19 @@ ALTER TABLE `clients`
 -- AUTO_INCREMENT for table `phases`
 --
 ALTER TABLE `phases`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `phase_costs_and_timing`
 --
 ALTER TABLE `phase_costs_and_timing`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `project_categories`
@@ -510,7 +571,7 @@ ALTER TABLE `project_categories`
 -- AUTO_INCREMENT for table `project_teams`
 --
 ALTER TABLE `project_teams`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -522,13 +583,13 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `tasks`
 --
 ALTER TABLE `tasks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `teams`
 --
 ALTER TABLE `teams`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `team_members`

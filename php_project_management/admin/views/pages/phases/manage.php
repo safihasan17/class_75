@@ -3,19 +3,16 @@
 $msg = "";
 require_once 'models/phasesclass.php';
 
-if(isset($_POST['delete_id'])){
+if (isset($_POST['delete_id'])) {
     $id = $_POST['delete_id'];
     // echo $id;
     $res = Phases::delete($id);
 
-    if($res === true){
-        $msg= "project Delated Sucessfully";
-    }else{
+    if ($res === true) {
+        $msg = "project Delated Sucessfully";
+    } else {
         $msg = $res;
     }
-
-    
-
 }
 
 
@@ -23,6 +20,23 @@ $rows = Phases::readALL();
 // echo "<pre>";
 // print_r($rows);
 // echo "</pre>";
+
+
+$limit = 7;
+$pages = Phases::getpageNo($limit);
+// print_r($pages);
+
+$rows = Phases::readAll(1, $limit);
+// echo '<pre>';
+// print_r($rows);
+// echo '</pre>';
+
+
+if (isset($_GET['pg'])) {
+    $pg = $_GET['pg'];
+    // echo "<h1> page Number: $pg</h1>";
+    $rows = Phases::readAll($pg, $limit);
+}
 
 ?>
 
@@ -64,7 +78,7 @@ $rows = Phases::readALL();
                             </div>
                             <!-- /.card-header -->
 
-                          <h4><?= $msg; ?></h4>
+                            <h4><?= $msg; ?></h4>
 
                             <div class="card-body p-0">
                                 <div class="table-responsive">
@@ -75,39 +89,57 @@ $rows = Phases::readALL();
                                                 <th>title</th>
                                                 <th>project_categories</th>
                                                 <th>Action</th>
-                                            
+
                                             </tr>
                                         </thead>
                                         <tbody>
 
-                                        <?php foreach($rows as $items): ?>
-                                            <tr class="align-middle">
-                                                <td><?= $items['id'] ?></td>
-                                                <td><?= $items['title'] ?></td>
-                                                <td><?= $items['project_category'] ?></td>
-                                                
-                                             
-                                                <td>
-                                                    <div class="btn-group">
-                                                        
-                                                        <a href="edit_phases?id=<?= $items['id']; ?>" class="btn btn-sm btn-default" ><i class="fa fa-edit text-success"></i></a> 
-                                                        <form action="" method="POST">
-                                                            <input type="hidden" name="delete_id" value="<?= $items['id']; ?>">
-                                                             <button type="submit" class="btn btn-sm btn-default"><i class="fa fa-trash text-denger"></i></button>
-                                                        </form>
-                                                        
+                                            <?php foreach ($rows as $items): ?>
+                                                <tr class="align-middle">
+                                                    <td><?= $items['id'] ?></td>
+                                                    <td><?= $items['title'] ?></td>
+                                                    <td><?= $items['project_category'] ?></td>
 
 
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                    <td>
+                                                        <div class="btn-group">
 
-                                            <?php endforeach;?>
+                                                            <a href="edit_phases?id=<?= $items['id']; ?>" class="btn btn-sm btn-default"><i class="fa fa-edit text-success"></i></a>
+                                                            <form action="" method="POST">
+                                                                <input type="hidden" name="delete_id" value="<?= $items['id']; ?>">
+                                                                <button type="submit" class="btn btn-sm btn-default"><i class="fa fa-trash text-denger"></i></button>
+                                                            </form>
+
+
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                            <?php endforeach; ?>
 
 
 
                                         </tbody>
                                     </table>
+                                </div>
+
+                                <!-- pagination -->
+
+                                <div class="card-footer clearfix">
+                                    <ul class="pagination pagination-sm m-0 float-right">
+
+                                        <li class="page-item"><a class="page-link" href="manage_phases?pg=1">First</a></li>
+
+                                        <?php for ($i = 1; $i <= $pages; $i++): ?>
+                                            <li class="page-item <?= ($pg == $i) ? 'active' : '' ?>">
+                                                <a class="page-link" href="manage_phases?pg=<?= $i; ?>"><?= $i ?></a>
+                                            </li>
+                                        <?php endfor; ?>
+
+                                        <li class="page-item"><a class="page-link" href="manage_phases?pg=<?= $pages; ?>">Last</a></li>
+
+                                    </ul>
                                 </div>
 
                             </div>

@@ -13,7 +13,7 @@ class Project
     public $actual_ending_time;
     public $actual_cost;
     public $budget_cost;
-    
+
 
     public function __construct(
         $_id,
@@ -27,7 +27,7 @@ class Project
         $_actual_ending_time,
         $_actual_cost,
         $_budget_cost,
-        
+
     ) {
         $this->id = $_id;
         $this->title = $_title;
@@ -40,7 +40,6 @@ class Project
         $this->actual_ending_time = $_actual_ending_time;
         $this->actual_cost = $_actual_cost;
         $this->budget_cost = $_budget_cost;
-        
     }
 
     public function create()
@@ -91,28 +90,86 @@ class Project
     public static function readAll()
     {
         global $db;
+        //     $sql = "SELECT p.id, p.title, c.name AS client_name, pc.name AS category_name,        
+        //    u.name AS user_name,  p.expected_starting_time, p.expected_ending_time,  p.actual_starting_time, p.actual_ending_time, p.actual_cost, p.budget_cost,
+        //    COALESCE(phase_sum.total_allocated, 0) AS phase_budget,
+        //    COALESCE(phase_sum.total_actual, 0) AS phase_actual,
+        //    CASE 
+        //        WHEN COALESCE(phase_sum.total_allocated, 0) = 0 THEN 0
+        //        ELSE ROUND((COALESCE(phase_sum.total_actual, 0) / COALESCE(phase_sum.total_allocated, 0)) * 100, 1)
+        //    END AS completion_percent
+        //     FROM projects as p
+        //     INNER JOIN clients as c ON p.client_id = c.id
+        //     INNER JOIN users as u ON p.user_id = u.id
+        //     INNER JOIN project_categories as pc ON p.project_category_id = pc.id
+        //     LEFT JOIN (
+        //         SELECT project_id, 
+        //                SUM(allocated_cost) as total_allocated, 
+        //                SUM(actual_cost) as total_actual
+        //         FROM phase_costs_and_timing
+        //         GROUP BY project_id
+        //     ) as phase_sum ON p.id = phase_sum.project_id";
+
+
         $sql = "SELECT p.id, p.title, c.name AS client_name, pc.name AS category_name,        
-       u.name AS user_name,  p.expected_starting_time, p.expected_ending_time,  p.actual_starting_time, p.actual_ending_time, p.actual_cost, p.budget_cost,
+       u.name AS user_name, p.expected_starting_time, p.expected_ending_time, p.actual_starting_time, p.actual_ending_time, p.actual_cost, p.budget_cost,
        COALESCE(phase_sum.total_allocated, 0) AS phase_budget,
        COALESCE(phase_sum.total_actual, 0) AS phase_actual,
        CASE 
            WHEN COALESCE(phase_sum.total_allocated, 0) = 0 THEN 0
            ELSE ROUND((COALESCE(phase_sum.total_actual, 0) / COALESCE(phase_sum.total_allocated, 0)) * 100, 1)
        END AS completion_percent
-        FROM projects as p
-        INNER JOIN clients as c ON p.client_id = c.id
-        INNER JOIN users as u ON p.user_id = u.id
-        INNER JOIN project_categories as pc ON p.project_category_id = pc.id
-        LEFT JOIN (
-            SELECT project_id, 
-                   SUM(allocated_cost) as total_allocated, 
-                   SUM(actual_cost) as total_actual
-            FROM phase_costs_and_timing
-            GROUP BY project_id
-        ) as phase_sum ON p.id = phase_sum.project_id";
+      FROM projects AS p, clients AS c, users AS u, project_categories AS pc,
+      (
+         SELECT project_id, 
+                SUM(allocated_cost) AS total_allocated, 
+                SUM(actual_cost) AS total_actual
+         FROM phase_costs_and_timing
+         GROUP BY project_id
+     ) AS phase_sum
+      WHERE p.client_id = c.id
+      AND p.user_id = u.id
+      AND p.project_category_id = pc.id
+     AND p.id = phase_sum.project_id  ";
+
+
+
         $result = $db->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
+
+     public static function readAllFilter($_category_id)
+    {
+        global $db;
+        
+        $sql = "SELECT p.id, p.title, c.name AS client_name, pc.name AS category_name,        
+       u.name AS user_name, p.expected_starting_time, p.expected_ending_time, p.actual_starting_time, p.actual_ending_time, p.actual_cost, p.budget_cost,
+       COALESCE(phase_sum.total_allocated, 0) AS phase_budget,
+       COALESCE(phase_sum.total_actual, 0) AS phase_actual,
+       CASE 
+           WHEN COALESCE(phase_sum.total_allocated, 0) = 0 THEN 0
+           ELSE ROUND((COALESCE(phase_sum.total_actual, 0) / COALESCE(phase_sum.total_allocated, 0)) * 100, 1)
+       END AS completion_percent
+      FROM projects AS p, clients AS c, users AS u, project_categories AS pc,
+      (
+         SELECT project_id, 
+                SUM(allocated_cost) AS total_allocated, 
+                SUM(actual_cost) AS total_actual
+         FROM phase_costs_and_timing
+         GROUP BY project_id
+     ) AS phase_sum
+      WHERE p.client_id = c.id
+      AND p.user_id = u.id
+      AND p.project_category_id = pc.id
+      AND p.id = phase_sum.project_id  AND pc.id = {$_category_id} ";
+
+
+
+        $result = $db->query($sql);
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
 
     public static function readById($_id)
     {

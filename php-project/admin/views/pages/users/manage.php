@@ -12,6 +12,7 @@ if (isset($_POST['delete_id'])) {
   }
 }
 
+
 $limit = 4;
 $pages = User::getpageNo($limit);
 print_r($pages);
