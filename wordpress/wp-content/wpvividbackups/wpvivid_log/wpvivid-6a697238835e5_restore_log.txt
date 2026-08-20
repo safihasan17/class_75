@@ -1,0 +1,99 @@
+[2026-07-29 03:23:37][notice]Start restoring themes.
+[2026-07-29 03:23:37][notice]Extracting file:localhost_wordpress_wpvivid-b977495a58f9c_2026-07-14-19-26_backup_all (1).zip
+[2026-07-29 03:23:38][notice]Extracting file:localhost_wordpress_wpvivid-b977495a58f9c_2026-07-14-19-26_backup_all (1).zip succeeded.
+[2026-07-29 03:23:38][notice]Extracting file:localhost_wordpress_wpvivid-b977495a58f9c_2026-07-14-19-26_backup_themes.zip index:0
+[2026-07-29 03:23:40][notice]Extracting file:localhost_wordpress_wpvivid-b977495a58f9c_2026-07-14-19-26_backup_themes.zip index:0 finished.
+[2026-07-29 03:23:40][notice]End restore themes.
+[2026-07-29 03:23:43][notice]Start restoring plugin.
+[2026-07-29 03:23:43][notice]Extracting file:localhost_wordpress_wpvivid-b977495a58f9c_2026-07-14-19-26_backup_all (1).zip
+[2026-07-29 03:23:43][notice]Extracting file:localhost_wordpress_wpvivid-b977495a58f9c_2026-07-14-19-26_backup_all (1).zip succeeded.
+[2026-07-29 03:23:43][notice]Extracting file:localhost_wordpress_wpvivid-b977495a58f9c_2026-07-14-19-26_backup_plugin.zip index:0
+[2026-07-29 03:23:46][notice]Extracting file:localhost_wordpress_wpvivid-b977495a58f9c_2026-07-14-19-26_backup_plugin.zip index:0 finished.
+[2026-07-29 03:23:46][notice]End restore plugin.
+[2026-07-29 03:23:49][notice]Start restoring wp-content.
+[2026-07-29 03:23:49][notice]Extracting file:localhost_wordpress_wpvivid-b977495a58f9c_2026-07-14-19-26_backup_all (1).zip
+[2026-07-29 03:23:49][notice]Extracting file:localhost_wordpress_wpvivid-b977495a58f9c_2026-07-14-19-26_backup_all (1).zip succeeded.
+[2026-07-29 03:23:49][notice]Extracting file:localhost_wordpress_wpvivid-b977495a58f9c_2026-07-14-19-26_backup_content.zip index:0
+[2026-07-29 03:23:49][notice]Extracting file:localhost_wordpress_wpvivid-b977495a58f9c_2026-07-14-19-26_backup_content.zip index:0 finished.
+[2026-07-29 03:23:49][notice]End restore wp-content.
+[2026-07-29 03:23:52][notice]Start restoring upload.
+[2026-07-29 03:23:52][notice]Extracting file:localhost_wordpress_wpvivid-b977495a58f9c_2026-07-14-19-26_backup_all (1).zip
+[2026-07-29 03:23:52][notice]Extracting file:localhost_wordpress_wpvivid-b977495a58f9c_2026-07-14-19-26_backup_all (1).zip succeeded.
+[2026-07-29 03:23:52][notice]Extracting file:localhost_wordpress_wpvivid-b977495a58f9c_2026-07-14-19-26_backup_uploads.zip index:0
+[2026-07-29 03:23:52][notice]Extracting file:localhost_wordpress_wpvivid-b977495a58f9c_2026-07-14-19-26_backup_uploads.zip index:0 finished.
+[2026-07-29 03:23:52][notice]End restore upload.
+[2026-07-29 03:23:56][notice]Start restoring wp-core.
+[2026-07-29 03:23:56][notice]Extracting file:localhost_wordpress_wpvivid-b977495a58f9c_2026-07-14-19-26_backup_all (1).zip
+[2026-07-29 03:23:57][notice]Extracting file:localhost_wordpress_wpvivid-b977495a58f9c_2026-07-14-19-26_backup_all (1).zip succeeded.
+[2026-07-29 03:23:57][notice]Extracting file:localhost_wordpress_wpvivid-b977495a58f9c_2026-07-14-19-26_backup_core.zip
+[2026-07-29 03:24:11][notice]Extracting file:localhost_wordpress_wpvivid-b977495a58f9c_2026-07-14-19-26_backup_core.zip succeeded.
+[2026-07-29 03:24:11][notice]End restore wp-core.
+[2026-07-29 03:24:14][notice]Start restoring databases.
+[2026-07-29 03:24:14][notice]Extracting file:localhost_wordpress_wpvivid-b977495a58f9c_2026-07-14-19-26_backup_all (1).zip
+[2026-07-29 03:24:14][notice]Extracting file:localhost_wordpress_wpvivid-b977495a58f9c_2026-07-14-19-26_backup_all (1).zip finished.
+[2026-07-29 03:24:14][notice]Extracting file:F:\sakirul__1295462\assets\PHP\Fordar_xaamp\htdocs\wordpress/wp-content\wpvividbackups\localhost_wordpress_wpvivid-b977495a58f9c_2026-07-14-19-26_backup_db.zip
+[2026-07-29 03:24:14][notice]Extracting file:F:\sakirul__1295462\assets\PHP\Fordar_xaamp\htdocs\wordpress/wp-content\wpvividbackups\localhost_wordpress_wpvivid-b977495a58f9c_2026-07-14-19-26_backup_db.zip finished.
+[2026-07-29 03:24:14][notice]End restore databases.
+[2026-07-29 03:24:17][notice]Start restoring databases.
+[2026-07-29 03:24:17][notice]Start restoring sql file offset:0
+[2026-07-29 03:24:18][notice]The test to drop table succeeds.
+[2026-07-29 03:24:18][notice]Drop table if exist tmp8ccb21_links
+[2026-07-29 03:24:18][notice]Creating table tmp8ccb21_links
+[2026-07-29 03:24:19][notice]Drop table if exist tmp8ccb21_term_relationships
+[2026-07-29 03:24:19][notice]Creating table tmp8ccb21_term_relationships
+[2026-07-29 03:24:22][notice]Drop table if exist tmp8ccb21_commentmeta
+[2026-07-29 03:24:22][notice]Creating table tmp8ccb21_commentmeta
+[2026-07-29 03:24:22][notice]Drop table if exist tmp8ccb21_term_taxonomy
+[2026-07-29 03:24:22][notice]Creating table tmp8ccb21_term_taxonomy
+[2026-07-29 03:24:23][notice]Drop table if exist tmp8ccb21_termmeta
+[2026-07-29 03:24:23][notice]Creating table tmp8ccb21_termmeta
+[2026-07-29 03:24:23][notice]Drop table if exist tmp8ccb21_terms
+[2026-07-29 03:24:24][notice]Creating table tmp8ccb21_terms
+[2026-07-29 03:24:24][notice]Drop table if exist tmp8ccb21_usermeta
+[2026-07-29 03:24:24][notice]Creating table tmp8ccb21_usermeta
+[2026-07-29 03:24:26][notice]Drop table if exist tmp8ccb21_users
+[2026-07-29 03:24:26][notice]Creating table tmp8ccb21_users
+[2026-07-29 03:24:26][notice]Drop table if exist tmp8ccb21_comments
+[2026-07-29 03:24:27][notice]Creating table tmp8ccb21_comments
+[2026-07-29 03:24:27][notice]Drop table if exist tmp8ccb21_postmeta
+[2026-07-29 03:24:28][notice]Creating table tmp8ccb21_postmeta
+[2026-07-29 03:25:02][notice]Drop table if exist tmp8ccb21_posts
+[2026-07-29 03:25:02][notice]Creating table tmp8ccb21_posts
+[2026-07-29 03:25:15][notice]Drop table if exist tmp8ccb21_options
+[2026-07-29 03:25:15][notice]Creating table tmp8ccb21_options
+[2026-07-29 03:25:30][notice]Start replacing table tmp8ccb21_options offset:0
+[2026-07-29 03:25:30][notice]
+[2026-07-29 03:25:30][notice]
+[2026-07-29 03:25:30][notice]UPDATE tmp8ccb21_options SET option_value="http://localhost/wordpress" WHERE option_name="siteurl";
+[2026-07-29 03:25:30][notice]update query len:99
+[2026-07-29 03:25:30][notice]UPDATE tmp8ccb21_options SET option_value="http://localhost/wordpress" WHERE option_name="home";
+[2026-07-29 03:25:30][notice]update query len:96
+[2026-07-29 03:25:30][notice]Restore db success
+[2026-07-29 03:25:30][notice]End restore databases.
+[2026-07-29 03:25:31][notice]Restore db success,now start rename temp table name prefix to new site prefix.
+[2026-07-29 03:25:32][notice]DROP TABLE IF EXISTS wp_commentmeta
+[2026-07-29 03:25:33][notice]DROP TABLE IF EXISTS wp_comments
+[2026-07-29 03:25:33][notice]DROP TABLE IF EXISTS wp_links
+[2026-07-29 03:25:33][notice]DROP TABLE IF EXISTS wp_options
+[2026-07-29 03:25:34][notice]DROP TABLE IF EXISTS wp_postmeta
+[2026-07-29 03:25:34][notice]DROP TABLE IF EXISTS wp_posts
+[2026-07-29 03:25:34][notice]DROP TABLE IF EXISTS wp_term_relationships
+[2026-07-29 03:25:34][notice]DROP TABLE IF EXISTS wp_term_taxonomy
+[2026-07-29 03:25:34][notice]DROP TABLE IF EXISTS wp_termmeta
+[2026-07-29 03:25:34][notice]DROP TABLE IF EXISTS wp_terms
+[2026-07-29 03:25:35][notice]DROP TABLE IF EXISTS wp_usermeta
+[2026-07-29 03:25:35][notice]DROP TABLE IF EXISTS wp_users
+[2026-07-29 03:25:35][notice]RENAME TABLE tmp8ccb21_commentmeta TO wp_commentmeta
+[2026-07-29 03:25:35][notice]RENAME TABLE tmp8ccb21_comments TO wp_comments
+[2026-07-29 03:25:36][notice]RENAME TABLE tmp8ccb21_links TO wp_links
+[2026-07-29 03:25:36][notice]RENAME TABLE tmp8ccb21_options TO wp_options
+[2026-07-29 03:25:36][notice]RENAME TABLE tmp8ccb21_postmeta TO wp_postmeta
+[2026-07-29 03:25:36][notice]RENAME TABLE tmp8ccb21_posts TO wp_posts
+[2026-07-29 03:25:37][notice]RENAME TABLE tmp8ccb21_term_relationships TO wp_term_relationships
+[2026-07-29 03:25:37][notice]RENAME TABLE tmp8ccb21_term_taxonomy TO wp_term_taxonomy
+[2026-07-29 03:25:37][notice]RENAME TABLE tmp8ccb21_termmeta TO wp_termmeta
+[2026-07-29 03:25:37][notice]RENAME TABLE tmp8ccb21_terms TO wp_terms
+[2026-07-29 03:25:38][notice]RENAME TABLE tmp8ccb21_usermeta TO wp_usermeta
+[2026-07-29 03:25:38][notice]RENAME TABLE tmp8ccb21_users TO wp_users
+[2026-07-29 03:25:39][notice]Replacing table prefix succeeded.
+[2026-07-29 03:25:41][notice]Deleting temp files.

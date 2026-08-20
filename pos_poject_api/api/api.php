@@ -57,7 +57,21 @@ if($_GET['endpoint']){
         getuserById($id);
     }elseif($endpoint == "roles" && $method=="GET"){
         getRoles();
-    }else{
+
+    }elseif($endpoint == "categories" && $method=="GET"){
+        getCategories();
+    }
+    
+    elseif($endpoint == "brands" && $method=="GET"){
+        getBrands();
+    }
+
+    elseif($endpoint == "product-create" && $method=="POST"){
+        createProduct($_POST, $_FILES);
+    }
+     
+
+    else{
         http_response_code(404);
     }
 }else{
