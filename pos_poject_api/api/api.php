@@ -12,6 +12,8 @@ require_once "../config/db.php";
 // require_once "../model/user.class.php";
 // require_once "user-api.php";
 
+require_once "../helpers/img-upload-helper.php";
+
 foreach(glob("../model/*.class.php") as $modelfile){
     require_once $modelfile;
 }
