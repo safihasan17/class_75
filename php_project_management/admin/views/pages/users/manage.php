@@ -3,19 +3,16 @@
 $msg = "";
 require_once 'models/userclass.php';
 
-if(isset($_POST['delete_id'])){
+if (isset($_POST['delete_id'])) {
     $id = $_POST['delete_id'];
     // echo $id;
     $res = User::delete($id);
 
-    if($res === true){
-        $msg= "User Delated Sucessfully";
-    }else{
+    if ($res === true) {
+        $msg = "User Delated Sucessfully";
+    } else {
         $msg = $res;
     }
-
-    
-
 }
 
 
@@ -64,9 +61,46 @@ $rows = User::readALL();
                             </div>
                             <!-- /.card-header -->
 
-                          <h4><?= $msg; ?></h4>
+                            <h4><?= $msg; ?></h4>
 
                             <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-striped align-middle"> <!-- table-bordered সরানো হয়েছে -->
+                                        <thead class="bg-light">
+                                            <tr>
+                                                <th style="width: 10px;" class="text-success fw-bold">ID</th>
+                                                <th class="text-success fw-bold">Name</th>
+                                                <th class="text-success fw-bold">Email</th>
+                                                <th class="text-success fw-bold">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($rows as $items): ?>
+                                                <tr class="align-middle">
+                                                    <td class="fw-bold text-primary"><?= $items['id'] ?></td>
+                                                    <td class="fw-semibold text-dark"><?= $items['name'] ?></td>
+                                                    <td class="fw-semibold text-info-emphasis"><?= $items['email'] ?></td> <!-- ব্যাজ সরিয়ে শুধু টেক্সট কালার -->
+                                                    <td>
+                                                        <div class="btn-group" role="group">
+                                                            <a href="edit-user?id=<?= $items['id']; ?>" class="btn btn-sm btn-outline-primary rounded-start" title="Edit User">
+                                                                <i class="fa fa-edit"></i>
+                                                            </a>
+                                                            <form action="" method="POST" class="d-inline">
+                                                                <input type="hidden" name="delete_id" value="<?= $items['id']; ?>">
+                                                                <button type="submit" class="btn btn-sm btn-outline-danger rounded-end" title="Delete User" onclick="return confirm('Are you sure?')">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- <div class="card-body p-0">
                                 <div class="table-responsive">
                                     <table class="table table-bordered">
                                         <thead>
@@ -79,7 +113,7 @@ $rows = User::readALL();
                                         </thead>
                                         <tbody>
 
-                                        <?php foreach($rows as $items): ?>
+                                        <?php foreach ($rows as $items): ?>
                                             <tr class="align-middle">
                                                 <td><?= $items['id'] ?></td>
                                                 <td><?= $items['name'] ?></td>
@@ -98,7 +132,7 @@ $rows = User::readALL();
                                                 </td>
                                             </tr>
 
-                                            <?php endforeach;?>
+                                            <?php endforeach; ?>
 
 
 
@@ -106,7 +140,7 @@ $rows = User::readALL();
                                     </table>
                                 </div>
 
-                            </div>
+                            </div> -->
                             <!-- /.card-body -->
 
                         </div>

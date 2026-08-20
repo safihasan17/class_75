@@ -82,67 +82,64 @@ if (isset($_GET['pg'])) {
 
                             <div class="card-body p-0">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <thead>
+                                    
+                                    <table class="table table-hover table-striped align-middle">
+                                        <thead class="bg-light">
                                             <tr>
-                                                <th>ID</th>
-                                                <th>title</th>
-                                                <th>project_categories</th>
-                                                <th>Action</th>
-
+                                                <th class="text-success fw-bold">ID</th>
+                                                <th class="text-success fw-bold">Title</th>
+                                                <th class="text-success fw-bold">Project Categories</th>
+                                                <th class="text-success fw-bold">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
 
                                             <?php foreach ($rows as $items): ?>
                                                 <tr class="align-middle">
-                                                    <td><?= $items['id'] ?></td>
-                                                    <td><?= $items['title'] ?></td>
-                                                    <td><?= $items['project_category'] ?></td>
-
+                                                    <td class="fw-bold text-primary"><?= $items['id'] ?></td>
+                                                    <td class="fw-semibold text-dark"><?= $items['title'] ?></td>
+                                                    
+                                                    <td class="text-warning fw-semibold"><?= $items['project_category'] ?></td>
 
                                                     <td>
-                                                        <div class="btn-group">
-
-                                                            <a href="edit_phases?id=<?= $items['id']; ?>" class="btn btn-sm btn-default"><i class="fa fa-edit text-success"></i></a>
-                                                            <form action="" method="POST">
+                                                        <div class="btn-group" role="group">
+                                                            <a href="edit_phases?id=<?= $items['id']; ?>" class="btn btn-sm btn-outline-primary rounded-start" title="Edit">
+                                                                <i class="fa fa-edit"></i>
+                                                            </a>
+                                                            <form action="" method="POST" class="d-inline">
                                                                 <input type="hidden" name="delete_id" value="<?= $items['id']; ?>">
-                                                                <button type="submit" class="btn btn-sm btn-default"><i class="fa fa-trash text-denger"></i></button>
+                                                                <button type="submit" class="btn btn-sm btn-outline-danger rounded-end" title="Delete" onclick="return confirm('Are you sure?')">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </button>
                                                             </form>
-
-
-
                                                         </div>
                                                     </td>
                                                 </tr>
 
                                             <?php endforeach; ?>
 
-
-
                                         </tbody>
                                     </table>
                                 </div>
 
                                 <!-- pagination -->
-
                                 <div class="card-footer clearfix">
                                     <ul class="pagination pagination-sm m-0 float-right">
-
                                         <li class="page-item"><a class="page-link" href="manage_phases?pg=1">First</a></li>
-
                                         <?php for ($i = 1; $i <= $pages; $i++): ?>
                                             <li class="page-item <?= ($pg == $i) ? 'active' : '' ?>">
                                                 <a class="page-link" href="manage_phases?pg=<?= $i; ?>"><?= $i ?></a>
                                             </li>
                                         <?php endfor; ?>
-
                                         <li class="page-item"><a class="page-link" href="manage_phases?pg=<?= $pages; ?>">Last</a></li>
-
                                     </ul>
                                 </div>
 
                             </div>
+
+                            
+
+
                             <!-- /.card-body -->
 
                         </div>
@@ -164,38 +161,3 @@ if (isset($_GET['pg'])) {
 </div>
 
 
-<!-- <div class="content-wrapper mt-4">
-     <div class="nk-block nk-block-lg mt-3 ">
-                      <div class="nk-block-head">
-                        <div class="nk-block-head-content">
-                          <h4 class="nk-block-title">Table </h4>
-                          <div class="nk-block-des">
-                            <p class="btn btn-sm btn-dark m-3"> Users </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="card card-bordered card-preview">
-                        <div class="card-inner">
-                          <table class="table">
-                            <thead>
-                              <tr>
-                                <th >ID</th>
-                                <th >Name</th>
-                                <th >Email</th>
-                                <th >Action</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                      
-                      
-</div> -->

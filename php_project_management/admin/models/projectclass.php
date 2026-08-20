@@ -119,18 +119,17 @@ class Project
            WHEN COALESCE(phase_sum.total_allocated, 0) = 0 THEN 0
            ELSE ROUND((COALESCE(phase_sum.total_actual, 0) / COALESCE(phase_sum.total_allocated, 0)) * 100, 1)
        END AS completion_percent
-      FROM projects AS p, clients AS c, users AS u, project_categories AS pc,
-      (
+      FROM projects AS p
+      INNER JOIN clients AS c ON p.client_id = c.id
+      INNER JOIN users AS u ON p.user_id = u.id
+      INNER JOIN project_categories AS pc ON p.project_category_id = pc.id
+      LEFT JOIN (
          SELECT project_id, 
                 SUM(allocated_cost) AS total_allocated, 
                 SUM(actual_cost) AS total_actual
          FROM phase_costs_and_timing
          GROUP BY project_id
-     ) AS phase_sum
-      WHERE p.client_id = c.id
-      AND p.user_id = u.id
-      AND p.project_category_id = pc.id
-     AND p.id = phase_sum.project_id  ";
+     ) AS phase_sum ON p.id = phase_sum.project_id";
 
 
 
@@ -139,10 +138,10 @@ class Project
     }
 
 
-     public static function readAllFilter($_category_id)
+    public static function readAllFilter($_category_id)
     {
         global $db;
-        
+
         $sql = "SELECT p.id, p.title, c.name AS client_name, pc.name AS category_name,        
        u.name AS user_name, p.expected_starting_time, p.expected_ending_time, p.actual_starting_time, p.actual_ending_time, p.actual_cost, p.budget_cost,
        COALESCE(phase_sum.total_allocated, 0) AS phase_budget,
@@ -151,22 +150,23 @@ class Project
            WHEN COALESCE(phase_sum.total_allocated, 0) = 0 THEN 0
            ELSE ROUND((COALESCE(phase_sum.total_actual, 0) / COALESCE(phase_sum.total_allocated, 0)) * 100, 1)
        END AS completion_percent
-      FROM projects AS p, clients AS c, users AS u, project_categories AS pc,
-      (
+      FROM projects AS p
+      INNER JOIN clients AS c ON p.client_id = c.id
+      INNER JOIN users AS u ON p.user_id = u.id
+      INNER JOIN project_categories AS pc ON p.project_category_id = pc.id
+      LEFT JOIN (
          SELECT project_id, 
                 SUM(allocated_cost) AS total_allocated, 
                 SUM(actual_cost) AS total_actual
          FROM phase_costs_and_timing
          GROUP BY project_id
-     ) AS phase_sum
-      WHERE p.client_id = c.id
-      AND p.user_id = u.id
-      AND p.project_category_id = pc.id
-      AND p.id = phase_sum.project_id  AND pc.id = {$_category_id} ";
+     ) AS phase_sum ON p.id = phase_sum.project_id
+      WHERE pc.id = {$_category_id}";
 
 
 
         $result = $db->query($sql);
+        if (!$result) return [];
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
@@ -279,10 +279,7 @@ class Project
         // Phase-wise breakdown with completion %
         $sql2 = "SELECT ph.title as phase_title, pct.allocated_cost, pct.actual_cost,
         pct.expected_time, pct.actual_time,
-        CASE 
-            WHEN pct.allocated_cost = 0 THEN 0
-            ELSE LEAST(ROUND((pct.actual_cost / pct.allocated_cost) * 100, 1), 100)
-        END AS phase_percent
+        COALESCE(pct.completion_percent, 0) AS phase_percent
         FROM phase_costs_and_timing as pct, phases as ph
         WHERE pct.phase_id = ph.id AND pct.project_id = $id";
         $phases = $db->query($sql2)->fetch_all(MYSQLI_ASSOC);
@@ -300,11 +297,17 @@ class Project
         $team = $db->query($sql3)->fetch_all(MYSQLI_ASSOC);
 
         // Tasks
-        $sql4 = "SELECT tk.title as task_title, ph.title as phase_title, t.name as team_name
-        FROM tasks as tk, phases as ph, teams as t
-        WHERE tk.phase_id = ph.id
-        AND tk.assign_to_team_id = t.id
-        AND tk.project_id = $id";
+        // Tasks
+        $sql4 = "SELECT tk.id as task_id, tk.title as task_title, ph.title as phase_title, t.name as team_name,
+      tk.allocated_cost, tk.actual_cost, tk.expected_time, tk.actual_time,
+CASE
+    WHEN tk.allocated_cost = 0 OR tk.allocated_cost IS NULL THEN 0
+    ELSE LEAST(ROUND((tk.actual_cost / tk.allocated_cost) * 100, 1), 100)
+END AS task_percent
+FROM tasks as tk, phases as ph, teams as t
+WHERE tk.phase_id = ph.id
+AND tk.assign_to_team_id = t.id
+AND tk.project_id = $id";
         $tasks = $db->query($sql4)->fetch_all(MYSQLI_ASSOC);
 
         return [

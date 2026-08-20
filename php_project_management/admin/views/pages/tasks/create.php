@@ -26,10 +26,15 @@ if (isset($_POST['btn_submit'])) {
     $phase_id = $_POST['phase_id'];
     $tittle = $_POST['tittle'];
     $tassign_to_team_id = $_POST['assign_to_team_id'];
+    $allocatecost = $_POST['allocatecost'];
+    $actualcost = $_POST['actualcost'];
+
+    $actualtime = !empty($_POST['actualtime']) ? $_POST['actualtime'] : '1000-01-01';
+    $expected_time = !empty($_POST['expected_time']) ? $_POST['expected_time'] : '1000-01-01';
 
 
 
-    $tasks = new Tasks(null, $project_id, $phase_id,  $tittle, $tassign_to_team_id);
+    $tasks = new Tasks(null, $project_id, $phase_id,  $tittle, $tassign_to_team_id , $allocatecost,  $actualcost, $actualtime, $expected_time );
 
     $tasks = $tasks->create();
 
@@ -171,11 +176,50 @@ if (isset($_POST['btn_submit'])) {
               </div>
             </div>
 
+
+            <div class="col-6">
+              <div class="form-group">
+                <label class="form-label text-primary">Allocate Cost</label>
+                <div class="form-control-wrap">
+                  <input type="number" class="form-control bg-white" name="allocatecost">
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="form-group">
+                <label class="form-label text-primary">Actual Cost</label>
+                <div class="form-control-wrap">
+                  <input type="number" class="form-control bg-white" name="actualcost">
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="form-group">
+                <label class="form-label text-primary">Actual Time</label>
+                <div class="form-control-wrap">
+                  <input type="date" class="form-control bg-white" name="actualtime">
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="form-group">
+                <label class="form-label text-primary">Expected Time</label>
+                <div class="form-control-wrap">
+                  <input type="date" class="form-control bg-white" name="expected_time">
+                </div>
+              </div>
+            </div>
+
             <div class="col-12">
               <div class="form-group">
                 <button type="submit" name="btn_submit" class="btn btn-lg btn-primary">Submit</button>
               </div>
             </div>
+
+
 
           </div>
         </form>

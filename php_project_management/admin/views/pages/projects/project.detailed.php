@@ -1,9 +1,12 @@
 <?php
 
 include_once 'models/projectclass.php';
+include_once 'models/taskclass.php';
 $id = $_GET['id'];
 $report = Project::getProjectDetails($id);
 $completion = $report['completion'];
+
+$rows = Tasks::readALL();
 
 // Overall budget vs actual from phases
 $totalAllocated = array_sum(array_column($report['phases'], 'allocated_cost'));
@@ -85,7 +88,7 @@ if ($completion >= 100) {
             </div>
         </div>
 
-        
+
         <div class="row g-3 mt-1">
             <div class="col-md-6">
                 <div class="p-3 rounded-3 h-100" style="background:#F3F6F5;">
@@ -178,64 +181,64 @@ if ($completion >= 100) {
 
 <!-- Phases -->
 <div class="card border-0 shadow-sm mb-4">
-  <div class="card-header bg-white border-0 pt-4 px-4">
-    <h5 class="mb-0 fw-bold"><i class="fa-solid fa-layer-group me-2 text-success"></i>Phases</h5>
-  </div>
-  <div class="card-body px-4 pb-4 pt-0">
-    <div class="table-responsive">
-      <table class="table table-hover align-middle mb-0">
-        <thead>
-          <tr class="text-uppercase small text-muted">
-            <th>Phase</th>
-            <th>Allocated Cost</th>
-            <th>Actual Cost</th>
-            <th>Phase Completion</th>
-            <th>Expected Time</th>
-            <th>Actual Time</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php if (empty($report['phases'])): ?>
-            <tr>
-              <td colspan="7" class="text-center text-muted py-4">No phase data added for this project yet.</td>
-            </tr>
-          <?php else: ?>
-            <?php foreach ($report['phases'] as $p): ?>
-              <?php
-              $over    = $p['actual_cost'] > $p['allocated_cost'];
-              $pp      = (float)$p['phase_percent'];
-              if ($pp >= 100)     $pBar = 'bg-success';
-              elseif ($pp >= 60)  $pBar = 'bg-info';
-              elseif ($pp >= 30)  $pBar = 'bg-warning';
-              else                $pBar = 'bg-secondary';
-              ?>
-              <tr>
-                <td class="fw-semibold"><?= $p['phase_title']; ?></td>
-                <td><?= number_format($p['allocated_cost'], 2); ?></td>
-                <td class="<?= $over ? 'text-danger fw-semibold' : '' ?>"><?= number_format($p['actual_cost'], 2); ?></td>
-                <td style="min-width:120px;">
-                    <div class="d-flex align-items-center gap-2">
-                        <div class="progress flex-grow-1" style="height:8px; border-radius:5px;">
-                            <div class="progress-bar <?= $pBar ?>" style="width:<?= $pp ?>%"></div>
-                        </div>
-                        <span class="small fw-semibold"><?= $pp ?>%</span>
-                    </div>
-                </td>
-                <td><?= $p['expected_time'] != '0000-00-00 00:00:00' ? date('d M Y', strtotime($p['expected_time'])) : '-'; ?> </td>
-                <td><?= $p['actual_time']   != '0000-00-00 00:00:00' ? date('d M Y', strtotime($p['actual_time']))   : '-'; ?> </td>
-                <td>
-                  <span class="badge <?= $over ? 'bg-danger' : 'bg-success'; ?>">
-                    <?= $over ? 'Over Budget' : 'On Budget'; ?>
-                  </span>
-                </td>
-              </tr>
-            <?php endforeach; ?>
-          <?php endif; ?>
-        </tbody>
-      </table>
+    <div class="card-header bg-white border-0 pt-4 px-4">
+        <h5 class="mb-0 fw-bold"><i class="fa-solid fa-layer-group me-2 text-success"></i>Phases</h5>
     </div>
-  </div>
+    <div class="card-body px-4 pb-4 pt-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr class="text-uppercase small text-muted">
+                        <th>Phase</th>
+                        <th>Allocated Cost</th>
+                        <th>Actual Cost</th>
+                        <th>Phase Completion</th>
+                        <th>Expected Time</th>
+                        <th>Actual Time</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (empty($report['phases'])): ?>
+                        <tr>
+                            <td colspan="7" class="text-center text-muted py-4">No phase data added for this project yet.</td>
+                        </tr>
+                    <?php else: ?>
+                        <?php foreach ($report['phases'] as $p): ?>
+                            <?php
+                            $over    = $p['actual_cost'] > $p['allocated_cost'];
+                            $pp      = (float)$p['phase_percent'];
+                            if ($pp >= 100)     $pBar = 'bg-success';
+                            elseif ($pp >= 60)  $pBar = 'bg-info';
+                            elseif ($pp >= 30)  $pBar = 'bg-warning';
+                            else                $pBar = 'bg-secondary';
+                            ?>
+                            <tr>
+                                <td class="fw-semibold"><?= $p['phase_title']; ?></td>
+                                <td><?= number_format($p['allocated_cost'], 2); ?></td>
+                                <td class="<?= $over ? 'text-danger fw-semibold' : '' ?>"><?= number_format($p['actual_cost'], 2); ?></td>
+                                <td style="min-width:120px;">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="progress flex-grow-1" style="height:8px; border-radius:5px;">
+                                            <div class="progress-bar <?= $pBar ?>" style="width:<?= $pp ?>%"></div>
+                                        </div>
+                                        <span class="small fw-semibold"><?= $pp ?>%</span>
+                                    </div>
+                                </td>
+                                <td><?= $p['expected_time'] != '0000-00-00 00:00:00' ? date('d M Y', strtotime($p['expected_time'])) : '-'; ?> </td>
+                                <td><?= $p['actual_time']   != '0000-00-00 00:00:00' ? date('d M Y', strtotime($p['actual_time']))   : '-'; ?> </td>
+                                <td>
+                                    <span class="badge <?= $over ? 'bg-danger' : 'bg-success'; ?>">
+                                        <?= $over ? 'Over Budget' : 'On Budget'; ?>
+                                    </span>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 <!-- Team -->
@@ -281,6 +284,7 @@ if ($completion >= 100) {
 <div class="card border-0 shadow-sm mb-4">
     <div class="card-header bg-white border-0 pt-4 px-4">
         <h5 class="mb-0 fw-bold"><i class="fa-solid fa-list-check me-2 text-success"></i>Tasks</h5>
+
     </div>
     <div class="card-body px-4 pb-4 pt-0">
         <div class="table-responsive">
@@ -290,19 +294,38 @@ if ($completion >= 100) {
                         <th>Task</th>
                         <th>Phase</th>
                         <th>Team</th>
+                        <th>Allocated</th>
+                        <th>Actual</th>
+                        <th>Expected Time</th>
+                        <th>Actual Time</th>
+                        <th>Progress</th>
+                        <th>Edit Tasks</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if (empty($report['tasks'])): ?>
                         <tr>
-                            <td colspan="3" class="text-center text-muted py-4">No tasks created for this project yet.</td>
+                            <td colspan="8" class="text-center text-muted py-4">No tasks created for this project yet.</td>
                         </tr>
                     <?php else: ?>
                         <?php foreach ($report['tasks'] as $tk): ?>
+                            <?php $tk_over = $tk['actual_cost'] > $tk['allocated_cost']; ?>
                             <tr>
                                 <td class="fw-semibold"><?= $tk['task_title']; ?></td>
                                 <td><span class="badge bg-light text-dark border"><?= $tk['phase_title']; ?></span></td>
                                 <td><?= $tk['team_name']; ?></td>
+                                <td><?= number_format($tk['allocated_cost'], 2); ?></td>
+                                <td class="<?= $tk_over ? 'text-danger fw-semibold' : '' ?>"><?= number_format($tk['actual_cost'], 2); ?></td>
+                                <td><?= $tk['expected_time'] != '0000-00-00 00:00:00' ? date('d M Y', strtotime($tk['expected_time'])) : '-'; ?></td>
+                                <td><?= $tk['actual_time']   != '0000-00-00 00:00:00' ? date('d M Y', strtotime($tk['actual_time']))   : '-'; ?></td>
+                                <td><?= $tk['task_percent']; ?>%</td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a href="edit_task?id=<?= $tk['task_id']; ?>&project-id=<?= $id ?>" class="btn btn-sm btn-outline-primary rounded-start" title="Edit">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                    </div>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     <?php endif; ?>

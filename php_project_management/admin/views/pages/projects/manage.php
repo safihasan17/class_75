@@ -71,21 +71,21 @@ if (isset($_POST['delete_id'])) {
                         <div class="card mb-4">
                             <div class="card-header">
 
-                            <div class="row">
-                                 <div class="col-12 col-md-6">
-                                    <a class="btn btn-sm btn-dark" href="create_project">Create Project</a>
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <a class="btn btn-sm btn-dark" href="create_project">Create Project</a>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 text-end">
+                                        <select name="" id="category-filter">
+                                            <option value="0">ALL</option>
+                                            <?php foreach ($categories as $category): ?>
+                                                <option value="<?= $category["id"]; ?>"> <?= $category["name"];  ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
                                 </div>
 
-                                <div class="col-12 col-md-6 text-end">
-                                    <select name="" id="category-filter">
-                                        <option value="0">ALL</option>
-                                        <?php foreach ($categories as $category): ?>
-                                            <option value="<?= $category["id"]; ?>"> <?= $category["name"];  ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                            </div>
-                               
                             </div>
 
                             <?php if ($msg): ?>
@@ -93,6 +93,136 @@ if (isset($_POST['delete_id'])) {
                             <?php endif; ?>
 
                             <div class="card-body p-0" id="project-list">
+                                <div class="table-responsive">
+                                    <!-- table-bordered সরানো হয়েছে -->
+                                    <table class="table table-hover table-striped align-middle">
+                                        <thead class="bg-light">
+                                            <tr>
+                                                <th class="text-success fw-bold">ID</th>
+                                                <th class="text-success fw-bold">Title</th>
+                                                <th class="text-success fw-bold">Client</th>
+                                                <th class="text-success fw-bold">Category</th>
+                                                <th class="text-success fw-bold">Manager</th>
+                                                <th class="text-success fw-bold">Budget Cost <small class="text-muted d-block fw-normal">(Phase Sum)</small></th>
+                                                <th class="text-success fw-bold">Actual Cost</th>
+                                                <th class="text-success fw-bold">Completion</th>
+                                                <th class="text-success fw-bold">Status</th>
+                                                <th class="text-success fw-bold">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <?php foreach ($rows as $items): ?>
+                                                <?php
+                                                $phaseBudget  = (float)$items['phase_budget'];
+                                                $phaseActual  = (float)$items['phase_actual'];
+                                                $budgetDisplay = $phaseBudget > 0 ? $phaseBudget : (float)$items['budget_cost'];
+                                                $percent      = (float)$items['completion_percent'];
+                                                $percent      = min($percent, 100);
+
+                                                if ($percent >= 100) {
+                                                    $barColor = 'bg-success';
+                                                } elseif ($percent >= 60) {
+                                                    $barColor = 'bg-info';
+                                                } elseif ($percent >= 30) {
+                                                    $barColor = 'bg-warning';
+                                                } else {
+                                                    $barColor = 'bg-secondary';
+                                                }
+
+                                                if ($percent >= 100) {
+                                                    $status     = 'Completed';
+                                                    $badgeClass = 'bg-primary';
+                                                } elseif ($percent >= 75) {
+                                                    $status     = 'Almost Done';
+                                                    $badgeClass = 'bg-info';
+                                                } elseif ($percent >= 30) {
+                                                    $status     = 'In Progress';
+                                                    $badgeClass = 'bg-success';
+                                                } elseif ($percent > 0) {
+                                                    $status     = 'Started';
+                                                    $badgeClass = 'bg-warning text-dark';
+                                                } else {
+                                                    $status     = 'Pending';
+                                                    $badgeClass = 'bg-secondary';
+                                                }
+                                                ?>
+                                                <tr class="align-middle">
+                                                    <td class="fw-bold text-primary"><?= $items['id'] ?></td>
+                                                    <td>
+                                                        <a href="project_detail?id=<?= $items['id']; ?>" class="fw-semibold text-dark text-decoration-none">
+                                                            <?= $items['title'] ?>
+                                                        </a>
+                                                    </td>
+                                                    
+                                                    <td class="text-info fw-semibold"><?= $items['client_name'] ?></td>
+                                                    <td class="text-secondary fw-semibold"><?= $items['category_name'] ?></td>
+                                                    <td class="text-success fw-semibold"><?= $items['user_name'] ?></td>
+
+                                                    <td class="fw-semibold text-success">
+                                                        <?= number_format($budgetDisplay, 2) ?>
+                                                        <?php if ($phaseBudget > 0): ?>
+                                                            <!-- <br><small class="text-muted">From <?= count(array_filter($rows, fn($r) => $r['id'] == $items['id'])) ?> phases</small> -->
+                                                        <?php endif; ?>
+                                                    </td>
+
+                                                    <td>
+                                                        <?php
+                                                        $actualDisplay = $phaseActual > 0 ? $phaseActual : (float)$items['actual_cost'];
+                                                        $isOver = $actualDisplay > $budgetDisplay && $budgetDisplay > 0;
+                                                        ?>
+                                                        <span class="<?= $isOver ? 'text-danger fw-semibold' : 'text-success fw-semibold' ?>">
+                                                            <?= number_format($actualDisplay, 2) ?>
+                                                        </span>
+                                                        <?php if ($isOver): ?>
+                                                            <br><small class="text-danger"><i class="fa fa-arrow-up"></i> Over Budget</small>
+                                                        <?php endif; ?>
+                                                    </td>
+
+                                                    <td style="min-width: 130px;">
+                                                        <div class="d-flex align-items-center gap-2">
+                                                            <div class="progress flex-grow-1" style="height:10px; border-radius:6px;">
+                                                                <div class="progress-bar <?= $barColor ?>"
+                                                                    role="progressbar"
+                                                                    style="width: <?= $percent ?>%;"
+                                                                    aria-valuenow="<?= $percent ?>"
+                                                                    aria-valuemin="0"
+                                                                    aria-valuemax="100">
+                                                                </div>
+                                                            </div>
+                                                            <span class="small fw-semibold" style="min-width:38px;">
+                                                                <?= $percent ?>%
+                                                            </span>
+                                                        </div>
+                                                    </td>
+
+                                                    <td>
+                                                        <span class="badge <?= $badgeClass ?>"><?= $status ?></span>
+                                                    </td>
+
+                                                    <td>
+                                                        <div class="btn-group" role="group">
+                                                            <a href="edit_project?id=<?= $items['id']; ?>" class="btn btn-sm btn-outline-primary rounded-start" title="Edit">
+                                                                <i class="fa fa-edit"></i>
+                                                            </a>
+                                                            <form action="" method="POST" class="d-inline">
+                                                                <input type="hidden" name="delete_id" value="<?= $items['id']; ?>">
+                                                                <button type="submit" class="btn btn-sm btn-outline-danger rounded-end" title="Delete" onclick="return confirm('Are you sure?')">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                            <?php endforeach; ?>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- <div class="card-body p-0" id="project-list">
                                 <div class="table-responsive">
                                     <table class="table table-bordered text-primary">
                                         <thead>
@@ -113,15 +243,14 @@ if (isset($_POST['delete_id'])) {
 
                                             <?php foreach ($rows as $items): ?>
                                                 <?php
-                                                // Budget: phase_budget asole phase allocated_cost er SUM (auto-synced)
-                                                // fallback hiseve project er budget_cost dekaai
+
                                                 $phaseBudget  = (float)$items['phase_budget'];
                                                 $phaseActual  = (float)$items['phase_actual'];
                                                 $budgetDisplay = $phaseBudget > 0 ? $phaseBudget : (float)$items['budget_cost'];
                                                 $percent      = (float)$items['completion_percent'];
                                                 $percent      = min($percent, 100);
 
-                                                // Progress bar color
+
                                                 if ($percent >= 100) {
                                                     $barColor = 'bg-success';
                                                 } elseif ($percent >= 60) {
@@ -132,8 +261,7 @@ if (isset($_POST['delete_id'])) {
                                                     $barColor = 'bg-secondary';
                                                 }
 
-                                                // ✅ Status —  completion % 
-                                                // actual_starting_time / actual_ending_time 
+
                                                 if ($percent >= 100) {
                                                     $status     = 'Completed';
                                                     $badgeClass = 'bg-primary';
@@ -162,7 +290,7 @@ if (isset($_POST['delete_id'])) {
                                                     <td><?= $items['category_name'] ?></td>
                                                     <td><?= $items['user_name'] ?></td>
 
-                                                    <!-- Budget Cost (Phase allocated_cost SUM) -->
+                                                    
                                                     <td>
                                                         <span class="fw-semibold">
                                                             <?= number_format($budgetDisplay, 2) ?>
@@ -172,8 +300,7 @@ if (isset($_POST['delete_id'])) {
                                                         <?php endif; ?>
                                                     </td>
 
-                                                    <!-- Actual Cost -->
-                                                    <td>
+                                                    
                                                         <?php
                                                         $actualDisplay = $phaseActual > 0 ? $phaseActual : (float)$items['actual_cost'];
                                                         $isOver = $actualDisplay > $budgetDisplay && $budgetDisplay > 0;
@@ -186,7 +313,7 @@ if (isset($_POST['delete_id'])) {
                                                         <?php endif; ?>
                                                     </td>
 
-                                                    <!-- Completion Percentage -->
+                                                    
                                                     <td style="min-width: 130px;">
                                                         <div class="d-flex align-items-center gap-2">
                                                             <div class="progress flex-grow-1" style="height:10px; border-radius:6px;">
@@ -229,7 +356,7 @@ if (isset($_POST['delete_id'])) {
                                     </table>
                                 </div>
 
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -248,30 +375,41 @@ if (isset($_POST['delete_id'])) {
     $("#category-filter").on("change", function() {
         let categoryId = $(this).val();
         $.ajax({
-            url: `api/get-projects?id=${categoryId}`,
+            url: `<?= BASE_URL_ADMIN; ?>api/api.php?endpoint=get-projects&id=${categoryId}`,
             type: "get",
-            // dataType: "json",
+            dataType: "json",
             success: function(projects) {
                 let html = "";
                 projects.forEach(item => {
-                    let phaseBudget  = parseFloat(item.phase_budget);
-                    let phaseActual  = parseFloat(item.phase_actual);
+                    let phaseBudget = parseFloat(item.phase_budget);
+                    let phaseActual = parseFloat(item.phase_actual);
                     let budgetDisplay = phaseBudget > 0 ? phaseBudget : parseFloat(item.budget_cost);
                     let actualDisplay = phaseActual > 0 ? phaseActual : parseFloat(item.actual_cost);
                     let percent = Math.min(parseFloat(item.completion_percent), 100);
 
                     // Progress bar color
                     let barColor = percent >= 100 ? 'bg-success' :
-                                   percent >= 60  ? 'bg-info' :
-                                   percent >= 30  ? 'bg-warning' : 'bg-secondary';
+                        percent >= 60 ? 'bg-info' :
+                        percent >= 30 ? 'bg-warning' : 'bg-secondary';
 
                     // Status badge
                     let status, badgeClass;
-                    if (percent >= 100)     { status = 'Completed';   badgeClass = 'bg-primary'; }
-                    else if (percent >= 75) { status = 'Almost Done'; badgeClass = 'bg-info'; }
-                    else if (percent >= 30) { status = 'In Progress'; badgeClass = 'bg-success'; }
-                    else if (percent > 0)   { status = 'Started';     badgeClass = 'bg-warning text-dark'; }
-                    else                    { status = 'Pending';     badgeClass = 'bg-secondary'; }
+                    if (percent >= 100) {
+                        status = 'Completed';
+                        badgeClass = 'bg-primary';
+                    } else if (percent >= 75) {
+                        status = 'Almost Done';
+                        badgeClass = 'bg-info';
+                    } else if (percent >= 30) {
+                        status = 'In Progress';
+                        badgeClass = 'bg-success';
+                    } else if (percent > 0) {
+                        status = 'Started';
+                        badgeClass = 'bg-warning text-dark';
+                    } else {
+                        status = 'Pending';
+                        badgeClass = 'bg-secondary';
+                    }
 
                     // Over budget
                     let isOver = actualDisplay > budgetDisplay && budgetDisplay > 0;
@@ -320,7 +458,7 @@ if (isset($_POST['delete_id'])) {
                     </tr>`;
                 });
 
-                $("#project-list table tbody").html(html); 
+                $("#project-list table tbody").html(html);
             },
             error: function(xhr) {
                 console.log(xhr.responseText);

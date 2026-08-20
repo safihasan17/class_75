@@ -17,6 +17,11 @@ $project = Project::readALL();
 
 $phases = Phases::readALL();
 
+function getHtmlDateValue($datetimeString) {
+    // Converts the datetime string into the YYYY-MM-DD format required by HTML
+    return date('Y-m-d', strtotime($datetimeString));
+}
+
 
 $row = null;
 if(isset($_GET['id'])){
@@ -36,9 +41,15 @@ if (isset($_POST['btn_submit'])) {
     $tittle = $_POST['tittle'];
     $tassign_to_team_id = $_POST['assign_to_team_id'];
 
+    $allocatecost = $_POST['allocatecost'];
+    $actualcost = $_POST['actualcost'];
+
+    $actualtime = !empty($_POST['actualtime']) ? $_POST['actualtime'] : '1000-01-01';
+    $expected_time = !empty($_POST['expected_time']) ? $_POST['expected_time'] : '1000-01-01';
 
 
-    $tasks = new Tasks($_GET['id'], $project_id, $phase_id,  $tittle, $tassign_to_team_id);
+
+    $tasks = new Tasks($_GET['id'], $project_id, $phase_id,  $tittle, $tassign_to_team_id , $allocatecost, $actualcost, $actualtime, $expected_time);
 
     $tasks = $tasks->update();
 
@@ -185,6 +196,42 @@ if (isset($_POST['btn_submit'])) {
                       <option value="<?= $items['id']; ?>" <?= $selected ?>><?= $items['name']; ?></option>
                     <?php endforeach; ?>
                   </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="form-group">
+                <label class="form-label text-primary">Allocate Cost</label>
+                <div class="form-control-wrap">
+                  <input type="number" class="form-control bg-white" name="allocatecost" value="<?= $row['allocated_cost'] ?>">
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="form-group">
+                <label class="form-label text-primary">Actual Cost</label>
+                <div class="form-control-wrap">
+                  <input type="number" class="form-control bg-white" name="actualcost" value="<?= $row['actual_cost'] ?>">
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="form-group">
+                <label class="form-label text-primary">Actual Time</label>
+                <div class="form-control-wrap">
+                  <input type="date" class="form-control bg-white" name="actualtime" value="<?= getHtmlDateValue($row['actual_time']) ?>">
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="form-group">
+                <label class="form-label text-primary">Expected Time</label>
+                <div class="form-control-wrap">
+                  <input type="date" class="form-control bg-white" name="expected_time" value="<?= getHtmlDateValue($row['expected_time']) ?>">
                 </div>
               </div>
             </div>

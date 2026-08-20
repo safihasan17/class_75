@@ -3,19 +3,16 @@
 $msg = "";
 require_once 'models/teamclass.php';
 
-if(isset($_POST['delete_id'])){
+if (isset($_POST['delete_id'])) {
     $id = $_POST['delete_id'];
     // echo $id;
     $res = Teams::delete($id);
 
-    if($res === true){
-        $msg= "project Delated Sucessfully";
-    }else{
+    if ($res === true) {
+        $msg = "project Delated Sucessfully";
+    } else {
         $msg = $res;
     }
-
-    
-
 }
 
 
@@ -64,9 +61,52 @@ $rows = Teams::readALL();
                             </div>
                             <!-- /.card-header -->
 
-                          <h4><?= $msg; ?></h4>
+                            <h4><?= $msg; ?></h4>
 
                             <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <!-- table-bordered সরানো হয়েছে -->
+                                    <table class="table table-hover table-striped align-middle">
+                                        <thead class="bg-light">
+                                            <tr>
+                                                <th class="text-success fw-bold">ID</th>
+                                                <th class="text-success fw-bold">Name</th>
+                                                <th class="text-success fw-bold">Projects</th>
+                                                <th class="text-success fw-bold">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <?php foreach ($rows as $items): ?>
+                                                <tr class="align-middle">
+                                                    <td class="fw-bold text-primary"><?= $items['id'] ?></td>
+                                                    <td class="fw-semibold text-dark"><?= $items['name'] ?></td>
+                                                    <!-- Projects: ব্যাজ বাদ -> শুধু টেক্সট রঙ -->
+                                                    <td class="text-info fw-semibold"><?= $items['project_title'] ?></td>
+
+                                                    <td>
+                                                        <div class="btn-group" role="group">
+                                                            <a href="edit_teams?id=<?= $items['id']; ?>" class="btn btn-sm btn-outline-primary rounded-start" title="Edit">
+                                                                <i class="fa fa-edit"></i>
+                                                            </a>
+                                                            <form action="" method="POST" class="d-inline">
+                                                                <input type="hidden" name="delete_id" value="<?= $items['id']; ?>">
+                                                                <button type="submit" class="btn btn-sm btn-outline-danger rounded-end" title="Delete" onclick="return confirm('Are you sure?')">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                            <?php endforeach; ?>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- <div class="card-body p-0">
                                 <div class="table-responsive">
                                     <table class="table table-bordered">
                                         <thead>
@@ -80,7 +120,7 @@ $rows = Teams::readALL();
                                         </thead>
                                         <tbody>
 
-                                        <?php foreach($rows as $items): ?>
+                                        <?php foreach ($rows as $items): ?>
                                             <tr class="align-middle">
                                                 <td><?= $items['id'] ?></td>
                                                 <td><?= $items['name'] ?></td>
@@ -102,7 +142,7 @@ $rows = Teams::readALL();
                                                 </td>
                                             </tr>
 
-                                            <?php endforeach;?>
+                                            <?php endforeach; ?>
 
 
 
@@ -110,7 +150,7 @@ $rows = Teams::readALL();
                                     </table>
                                 </div>
 
-                            </div>
+                            </div> -->
                             <!-- /.card-body -->
 
                         </div>

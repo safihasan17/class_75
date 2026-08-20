@@ -2,7 +2,11 @@
 if(isset($_GET['page'])){
     $page = $_GET['page'];
 
-    if($page == 'dashboard'){
+    if(isset($_SESSION['id']) == false){
+        include_once('views/pages/auth/login.php');
+    }
+
+    elseif($page == 'dashboard'){
         include_once('views/pages/dashboard.php');
     } 
     elseif($page == 'projects'){
@@ -38,6 +42,10 @@ if(isset($_GET['page'])){
 
     elseif($page == 'project_detail'){
         include_once('views/pages/projects/project.detailed.php');
+    }
+
+    elseif($page == 'edit_task'){
+        include_once('views/pages/projects/edittasks.php');
     }
 
 
@@ -105,12 +113,21 @@ if(isset($_GET['page'])){
         include_once('views/pages/phases.cost.timing/edit.php');
     }
 
+    //login
 
+    elseif($page == 'login'){
+        include_once('views/pages/auth/login.php');
+    }
+
+    
+
+
+    
     else{
-        include_once('views/pages/dashboard.php');
+        include_once('views/pages/auth/login.php');
     }
 }
 else{
-        include_once('views/pages/dashboard.php');
+        include_once('views/pages/auth/login.php');
     }
 ?>
